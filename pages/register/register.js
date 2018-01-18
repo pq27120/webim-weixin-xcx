@@ -21,7 +21,7 @@ Page({
         var that = this
         if(that.data.username == '') {
 			wx.showModal({
-				title: '请输入用户名！',
+        title: '请输入账号！',
 				confirmText: 'OK',
 				showCancel: false
 			})

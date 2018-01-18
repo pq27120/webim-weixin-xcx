@@ -3,10 +3,10 @@
 		<image src="../../images/logo.png"></image>
 	</view>
 	<view class="register_user">
-		<input type="text" placeholder="Easemob ID" placeholder-style="color:rgb(173,185,193)" bindinput="bindUsername"/>
+		<input type="text" placeholder="账号" placeholder-style="color:rgb(173,185,193)" bindinput="bindUsername"/>
 	</view>
 	<view class="register_pwd">
-		<input type="text" password placeholder="Password" placeholder-style="color:rgb(173,185,193)" bindinput="bindPassword"/>
+		<input type="text" password placeholder="密码" placeholder-style="color:rgb(173,185,193)" bindinput="bindPassword"/>
 	</view>
 	<view class="register_text">
 		<view>
