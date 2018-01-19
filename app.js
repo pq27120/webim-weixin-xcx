@@ -1,4 +1,5 @@
 require('./utils/strophe.js')
+var JMessage = require('./utils/jmessage.min.js')
 var WebIM = require('./utils/WebIM.js').default
 
 //app.js   
@@ -18,6 +19,21 @@ App({
         var logs = wx.getStorageSync('logs') || []
         logs.unshift(Date.now())
         wx.setStorageSync('logs', logs)
+
+        var jim = new JMessage({
+            debug : true
+        });
+
+        jim.init({
+          "appkey": "5da10dc227e8d4125971ed9b",
+          "random_str": "<random_str>",
+          "signature": "<signature>",
+          "timestamp": "<timestamp>"
+        }).onSuccess(function (data) {
+          //TODO
+        }).onFail(function (data) {
+          //TODO
+        });  
 
         WebIM.conn.listen({
             onOpened: function (message) {
