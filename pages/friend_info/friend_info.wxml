@@ -12,11 +12,11 @@
 
 <view class="message">
 	<view class="name">
-		<text>Name</text>
+		<text>姓名</text>
 		<text>{{ yourname }}</text>
 	</view>
 	<view class="ID">
-		<text>Easemob ID</text>
+		<text>咨询号</text>
 		<text>{{ yourname }}</text>
 	</view>
 </view>
