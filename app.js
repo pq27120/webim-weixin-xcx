@@ -1,5 +1,7 @@
 require('./utils/strophe.js')
 var JMessage = require('./utils/jmessage.min.js')
+var uuid = require('./utils/uuid.js')
+var md = require('./utils/md5.js')
 var WebIM = require('./utils/WebIM.js').default
 
 //app.js   
@@ -24,13 +26,18 @@ App({
             debug : true
         });
 
+        var appkey = "5da10dc227e8d4125971ed9b";
+        var id = uuid.v1().replace(new RegExp("-", "g"), "");
+        var timestamp = (new Date()).valueOf();
+        var secret = md.md5("appkey=" + appkey + "&timestamp=" + timestamp  + "&random_str=" + id  + "&key=bd2f7dea8d90d09ad56b6229");
         jim.init({
           "appkey": "5da10dc227e8d4125971ed9b",
-          "random_str": "<random_str>",
-          "signature": "<signature>",
-          "timestamp": "<timestamp>"
+          "random_str": id,
+          "signature": secret,
+          "timestamp": timestamp
         }).onSuccess(function (data) {
           //TODO
+          that.globalData.jim = jim;
         }).onFail(function (data) {
           //TODO
         });  
@@ -330,6 +337,7 @@ App({
     ,
     globalData: {
         userInfo: null,
-        chatMsg: []
+        chatMsg: [],
+        jim: null
     }
 })
