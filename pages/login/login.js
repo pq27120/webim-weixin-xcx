@@ -2,11 +2,13 @@ var strophe = require('../../utils/strophe.js')
 var WebIM = require('../../utils/WebIM.js')
 var WebIM = WebIM.default
 
+
 Page({
     data: {
         name: 'zzf1',
         psd: 'z',
-        grant_type: "password"
+        grant_type: "password",
+        jim: null,
     },
     bindUsername: function (e) {
         this.setData({
@@ -19,11 +21,12 @@ Page({
         })
     },
     onLoad: function () {
-        // this.login()
+        // this.login()             
     },
     login: function () {
         //console.log('login')
         var that = this
+        // var resp = RL_YTX.init("123456"); 
         if (that.data.name == '') {
             wx.showModal({
               title: '请输入账号！',
@@ -37,19 +40,33 @@ Page({
                 showCancel: false
             })
         } else {
-            var options = {
-                apiUrl: WebIM.config.apiURL,
-                user: that.data.name,
-                pwd: that.data.psd,
-                grant_type: that.data.grant_type,
-                appKey: WebIM.config.appkey
-            }
+            // var options = {
+            //     apiUrl: WebIM.config.apiURL,
+            //     user: that.data.name,
+            //     pwd: that.data.psd,
+            //     grant_type: that.data.grant_type,
+            //     appKey: WebIM.config.appkey
+            // }
             wx.setStorage({
                 key: "myUsername",
                 data: that.data.name
             })
             //console.log('open')
-            WebIM.conn.open(options)
+            // WebIM.conn.open(options)            
+            getApp().globalData.jim.login({
+              'username': that.data.name,
+              'password': that.data.psd
+            }).onSuccess(function (data) {
+              //data.code 返回码
+              //data.message 描述
+              if(data.code == 0) {
+                wx.navigateTo({
+                  url: '../main/main'
+                })
+              }
+            }).onFail(function (data) {
+              //同上
+            })
         }
     }
 })
