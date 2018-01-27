@@ -31,10 +31,20 @@ Page({
 	    	return false
 	    }
 	    else {
-		    WebIM.conn.subscribe({
-		        to: that.data.friend_name
-		        // message: "hello!"                   
-		    })
+        getApp().globalData.jim.addFriend({
+          'target_name': that.data.friend_name,
+          'why': 'why'
+        }).onSuccess(function (data) {
+          console.log(data);
+          //data.code 返回码
+          //data.message 描述
+        }).onFail(function (data) {
+          // 同上
+        });
+		    // WebIM.conn.subscribe({
+		    //     to: that.data.friend_name
+		    //     // message: "hello!"                   
+		    // })
 		    wx.showToast({
 	    		title: '消息发送成功！',
 	    		duration: 1500

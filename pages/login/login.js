@@ -60,8 +60,8 @@ Page({
               //data.code 返回码
               //data.message 描述
               if(data.code == 0) {
-                wx.navigateTo({
-                  url: '../main/main'
+                wx.redirectTo({
+                  url: '../main/main?myName=' + that.data.name
                 })
               }
             }).onFail(function (data) {

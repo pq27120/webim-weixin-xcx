@@ -19,6 +19,20 @@ Page({
     onShow: function () {
         var that = this
         // //console.log(WebIM.conn)
+        getApp().globalData.jim.getFriendList().onSuccess(function (data) {
+          var member = []
+          if(data.code == 0){
+            member = data.friend_list     
+            that.setData({
+              member: member
+            })
+            wx.setStorage({
+              key: 'member',
+              data: that.data.member
+            })       
+          }
+        })
+
         var rosters = {
             success: function (roster) {
                 var member = []

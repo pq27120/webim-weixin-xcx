@@ -338,6 +338,7 @@ App({
     globalData: {
         userInfo: null,
         chatMsg: [],
-        jim: null
+        jim: null,
+        appkey: '5da10dc227e8d4125971ed9b'
     }
 })
