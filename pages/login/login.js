@@ -5,8 +5,10 @@ var WebIM = WebIM.default
 
 Page({
     data: {
-        name: 'zzf1',
-        psd: 'z',
+        // name: 'zzf1',
+        // psd: 'z',
+        name:'ceshi1', 
+        psd:'ceshi1',
         grant_type: "password",
         jim: null,
     },
@@ -61,6 +63,7 @@ Page({
               //data.message 描述
               if(data.code == 0) {
                 wx.redirectTo({
+                  // 登录成功，跳转到主页面
                   url: '../main/main?myName=' + that.data.name
                 })
               }

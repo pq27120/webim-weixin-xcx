@@ -9,10 +9,12 @@ Page({
         show_mask: false,
         myName: '',
         member: []
+        // isDoctor:false
     },
     onLoad: function (option) {
         this.setData({
             myName: option.myName
+            // isDoctor: option.doctor
         })
         //console.log("wjy")
     },

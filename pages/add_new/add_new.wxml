@@ -4,5 +4,6 @@
 	</view>
 	<!-- <text bindtap="add_friend">发送申请</text> -->
 </view>
+<button bindtap="scan">扫一扫</button>
 <button bindtap="add_friend">发送申请</button>
 

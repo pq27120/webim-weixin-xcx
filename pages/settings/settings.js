@@ -28,6 +28,12 @@ Page({
 			url: '../friend_info/friend_info?yourname=' + myUsername
 		})
 	},
+  // 医生咨询费设置界面
+  setting_money:function(){
+    wx.navigateTo({
+      url: '../setting_money/setting_money?yourname=' + wx.getStorageSync('myUsername')
+    })
+  },
 	logout: function() {
 		wx.showModal({
 			title: '是否退出登录',

@@ -21,7 +21,7 @@ Page({
         chatMsg: [],
         emojiStr: '',
         yourname: '',
-        myName: '',
+        // myName: '',
         sendInfo: '',
         userMessage: '',
         inputMessage: '',
@@ -41,15 +41,18 @@ Page({
     },
     onLoad: function (options) {
         var that = this
-        console.log(options)
-        var myName = wx.getStorageSync('myUsername')
-        console.log(myName)
+        // console.log(options);
+        // console.log('>>>>>' + wx.getStorageSync('myUsername'));
+        // var myName = wx.getStorageSync('myUsername')
+        // console.log('>>>>>>>>>>' + myName);
         var options = JSON.parse(options.username)
-        var num = wx.getStorageSync(options.your + myName).length - 1
+        // var num = wx.getStorageSync(options.your + myName).length - 1
+        var num = wx.getStorageSync(options.your).length;
         if (num > 0) {
             setTimeout(function () {
                 that.setData({
-                    toView: wx.getStorageSync(options.your + myName)[num].mid
+                    // toView: wx.getStorageSync(options.your + myName)[num].mid
+                  toView: wx.getStorageSync(options.your)[num].mid
                 })
             }, 10)
         }
