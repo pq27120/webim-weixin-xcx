@@ -21,6 +21,14 @@ Page({
 			duration: 1500
 		})
 	},
+  // 允许从相机和相册扫码
+  san:function(){
+    wx.scanCode({
+      success: (res) => {
+        console.log(res)
+      }
+    })
+  },
 	add_friend: function() {
 	    var that = this
 	    if(that.data.friend_name == '') {
