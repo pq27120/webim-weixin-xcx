@@ -4,7 +4,8 @@ var app = getApp()
 Page({
   timeOut: null,
   data: {
-    motto: '环信即时通讯云',
+    // motto: '环信即时通讯云',
+    motto:'结核医生',
     userInfo: {},
     login: false
   },
@@ -12,6 +13,7 @@ Page({
   bindViewTap: function() {
     wx.redirectTo({
       url: '../login/login'
+      // url: '../choose_role/choose_role'
     })
     clearTimeout(this.timeOut)  
   },
@@ -19,6 +21,7 @@ Page({
      this.timeOut = setTimeout(function() {
            wx.redirectTo({
               url: '../login/login'
+              // url: '../choose_role/choose_role'
           })
     },3000)
     var that = this

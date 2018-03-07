@@ -1,0 +1,6 @@
+<view class='contact'>
+<button type="default" bindtap="impatient" hover-class="other-button-hover"> 我是患者 </button>
+<button type="default" bindtap="imdoctor" hover-class="other-button-hover"> 我是医生</button>
+</view>
+
+

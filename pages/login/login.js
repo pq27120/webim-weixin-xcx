@@ -10,7 +10,16 @@ Page({
         name:'ceshi1', 
         psd:'ceshi1',
         grant_type: "password",
-        jim: null,
+        myrole: 'patient', // 默认患者
+        jim: null
+    },
+    onLoad: function (option) {
+      // this.login()       
+      // console.log(1);
+      // console.log(option.role);
+      this.setData({
+        myrole: option.role
+      })
     },
     bindUsername: function (e) {
         this.setData({
@@ -22,9 +31,14 @@ Page({
             psd: e.detail.value
         })
     },
-    onLoad: function () {
-        // this.login()             
-    },
+    // onLoad: function (option) {
+    //     // this.login()       
+    //   console.log(1);
+    //   this.setData({
+    //     myrole: option.role
+    //   })
+    //   console.log(myrole);      
+    // },
     login: function () {
         //console.log('login')
         var that = this
@@ -64,7 +78,7 @@ Page({
               if(data.code == 0) {
                 wx.redirectTo({
                   // 登录成功，跳转到主页面
-                  url: '../main/main?myName=' + that.data.name
+                  url: '../main/main?role=' + role + 'myName=' + that.data.name
                 })
               }
             }).onFail(function (data) {
