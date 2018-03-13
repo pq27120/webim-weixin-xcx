@@ -10,9 +10,9 @@
 	</view>
 	<view class="login_text">
 		<view>
-			<text>没有账号?</text>
+			<!-- text>没有账号?</text>
 			<navigator url="../register/register" redirect hover-class="navigator-hover">注 册</navigator>
-      <navigator url="../choose_role/choose_role" redirect hover-class="navigator-hover">选角色</navigator>
+      <navigator url="../choose_role/choose_role" redirect hover-class="navigator-hover">选角色</navigator -->
 		</view>
 	</view>
 	<button  class="login_btn" hover-class="btn_hover" bindtap="login">登 录</button>

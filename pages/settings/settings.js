@@ -4,13 +4,17 @@ var WebIM = WebIM.default
 
 Page({
 	data: {
-		username:''
+		username:'',
+    isDoctor: false
 	},
-	onLoad: function() {
+	onLoad: function(option) {
 		var myUsername = wx.getStorageSync('myUsername')
 		this.setData({
-			username: myUsername
+			username: myUsername,
+      isDoctor: option.role == 'doctor'
 		})
+    var that = this
+    console.log('onload.isDoctor=' + that.data.isDoctor)
 	},
 	tab_contact: function() {
 		wx.redirectTo({
@@ -42,7 +46,8 @@ Page({
 		   	        WebIM.conn.close()
 		   	        //wx.closeSocket()
 		   	        wx.redirectTo({
-		   	        	url: '../login/login'
+		   	        	// url: '../login/login'
+                   url: '../choose_role/choose_role'
 		   	        })
 				}
 			}

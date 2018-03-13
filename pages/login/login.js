@@ -10,7 +10,7 @@ Page({
         name:'ceshi1', 
         psd:'ceshi1',
         grant_type: "password",
-        myrole: 'patient', // 默认患者
+        myrole: 'patient', // 默认是患者
         jim: null
     },
     onLoad: function (option) {
@@ -75,10 +75,11 @@ Page({
             }).onSuccess(function (data) {
               //data.code 返回码
               //data.message 描述
+              // console.log(that.data.myrole);
               if(data.code == 0) {
                 wx.redirectTo({
                   // 登录成功，跳转到主页面
-                  url: '../main/main?role=' + role + 'myName=' + that.data.name
+                  url: '../main/main?role=' + that.data.myrole + '&myName=' + that.data.name
                 })
               }
             }).onFail(function (data) {

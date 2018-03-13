@@ -11,14 +11,23 @@ Page({
 		//console.log(getCurrentPages())
 	},
   impatient: function() {
-    wx.redirectTo({
-      url: '../login/login?role=patient'
-    })
+    // wx.redirectTo({
+    //   url: '../login/login?role=patient'
+    // })
+    this.gotoLogin('patient');
 	},
-  // 允许从相机和相册扫码
+  // 医生角色
   imdoctor:function(){
+    // wx.redirectTo({
+    //   url: '../login/login?role=doctor'
+    // })
+    this.gotoLogin('doctor');
+  },
+
+  // 跳转登录界面，带入角色参数
+  gotoLogin:function(role){
     wx.redirectTo({
-      url: '../login/login?role=doctor'
+      url: '../login/login?role=' + role
     })
   }
 })

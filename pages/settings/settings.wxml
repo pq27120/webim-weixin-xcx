@@ -14,6 +14,7 @@
 		<text class="list_right">></text>
 	</view>
 </view>
+
  <view class="setting_list">
 	<text>自动登录</text>
 	<switch checked/>

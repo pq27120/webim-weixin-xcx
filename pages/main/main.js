@@ -8,15 +8,19 @@ Page({
         search_friend: false,
         show_mask: false,
         myName: '',
+        myrole: '',
         member: []
         // isDoctor:false
     },
     onLoad: function (option) {
         this.setData({
-            myName: option.myName
+            myName: option.myName,
+            myrole: option.role
             // isDoctor: option.doctor
         })
         //console.log("wjy")
+        //var that = this
+        //console.log('main js .... role = ' + that.data.myrole)
     },
     onShow: function () {
         var that = this
@@ -174,9 +178,12 @@ Page({
         })
     },
     tab_setting: function () {
+      var that = this
+      // console.log('main.js.tab_setting.role=' + that.data.myrole)
         wx.redirectTo({
-            url: '../settings/settings'
+            url: '../settings/settings?role=' + that.data.myrole
         })
+        
     },
     into_inform: function () {
         wx.navigateTo({
