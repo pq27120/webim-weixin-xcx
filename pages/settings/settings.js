@@ -4,17 +4,17 @@ var WebIM = WebIM.default
 
 Page({
 	data: {
-		username:'',
-    isDoctor: false
+    isDoctor: '',
+		username:''
 	},
 	onLoad: function(option) {
 		var myUsername = wx.getStorageSync('myUsername')
 		this.setData({
-			username: myUsername,
-      isDoctor: option.role == 'doctor'
+      isDoctor: option.role == 'doctor',
+			username: myUsername
 		})
-    var that = this
-    console.log('onload.isDoctor=' + that.data.isDoctor)
+    // var that = this
+    // console.log('onload.isDoctor=' + that.data.isDoctor)
 	},
 	tab_contact: function() {
 		wx.redirectTo({
