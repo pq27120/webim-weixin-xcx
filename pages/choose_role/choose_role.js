@@ -1,6 +1,6 @@
-var strophe = require('../../utils/strophe.js')
-var WebIM = require('../../utils/WebIM.js')
-var WebIM = WebIM.default
+// var strophe = require('../../utils/strophe.js')
+// var WebIM = require('../../utils/WebIM.js')
+// var WebIM = WebIM.default
 
 //WebIM.conn  实例化的  
 Page({
