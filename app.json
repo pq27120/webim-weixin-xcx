@@ -1,6 +1,6 @@
 {
   "pages": [
-    "pages/choose_role/choose_role",
+    "pages/chooserole/chooserole",
     "pages/login/login",
     "pages/main/main",
     "pages/chatroom/chatroom",

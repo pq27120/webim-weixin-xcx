@@ -1,0 +1,12 @@
+<view class='contact'>
+<button type="default" bindtap="impatient"> 我是患者 </button>
+<button type="default" bindtap="imdoctor"> 我是医生</button>
+</view>
+
+<view class="contact">
+   <view>
+    已经选过角色，直接 <text style='text-decoration:underline;' bindtap='impatient'>登录</text>
+   </view>
+</view>
+
+
