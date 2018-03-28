@@ -2,6 +2,8 @@ require('./utils/strophe.js')
 var JMessage = require('./utils/jmessage.min.js')
 // 去掉此行的引入，因为会报错，找不到crypto变量
 // var uuid = require('./utils/uuid.js')
+var uuid = require('./utils/uuidtool.js')
+// var vvvv = require('./utils/node-uuid/v4.js');
 var md = require('./utils/md5.js')
 var WebIM = require('./utils/WebIM.js').default
 
@@ -28,10 +30,12 @@ App({
         });
 
         var appkey = "5da10dc227e8d4125971ed9b";
-        // var id = uuid.v1().replace(new RegExp("-", "g"), "");
-        // console.log('id=' + id)
+        // var id = uuidv1.replace(new RegExp("-", "g"), "");
+        // console.log('id=' + id);
+        var id = uuid.uuid().replace(new RegExp("-", "g"), "");
+        // console.log('uuid1=' + uuid1)
         // 写死此id
-        var id = '4fe2fb8030f011e8a01385a16ca66749';
+        // var id = '4fe2fb8030f011e8a01385a16ca66749';
         var timestamp = (new Date()).valueOf();
         var secret = md.md5("appkey=" + appkey + "&timestamp=" + timestamp  + "&random_str=" + id  + "&key=bd2f7dea8d90d09ad56b6229");
         jim.init({

@@ -47,7 +47,7 @@ Page({
 		   	        //wx.closeSocket()
 		   	        wx.redirectTo({
 		   	        	// url: '../login/login'
-                   url: '../choose_role/choose_role'
+                   url: '../chooserole/chooserole'
 		   	        })
 				}
 			}
