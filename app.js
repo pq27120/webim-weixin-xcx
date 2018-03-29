@@ -347,6 +347,8 @@ App({
         userInfo: null,
         chatMsg: [],
         jim: null,
-        appkey: '5da10dc227e8d4125971ed9b'
+        appkey: '5da10dc227e8d4125971ed9b',
+        role: null,
+        name: null
     }
 })

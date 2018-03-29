@@ -10,16 +10,16 @@ Page({
         name:'ceshi1', 
         psd:'ceshi1',
         grant_type: "password",
-        myrole: 'patient', // 默认是患者
+        // myrole: 'patient', // 默认是患者
         jim: null
     },
     onLoad: function (option) {
       // this.login()       
       // console.log(1);
       // console.log(option.role);
-      this.setData({
-        myrole: option.role
-      })
+      // this.setData({
+      //   myrole: option.role
+      // })
     },
     bindUsername: function (e) {
         this.setData({
@@ -63,10 +63,10 @@ Page({
             //     grant_type: that.data.grant_type,
             //     appKey: WebIM.config.appkey
             // }
-            wx.setStorage({
-                key: "myUsername",
-                data: that.data.name
-            })
+            // wx.setStorage({
+            //     key: "myUsername",
+            //     data: that.data.name
+            // })
             //console.log('open')
             // WebIM.conn.open(options)            
             getApp().globalData.jim.login({
@@ -77,9 +77,13 @@ Page({
               //data.message 描述
               // console.log(that.data.myrole);
               if(data.code == 0) {
+                getApp().globalData.name = that.data.name;
+                // console.log('username=' + getApp().globalData.name)
                 wx.redirectTo({
                   // 登录成功，跳转到主页面
-                  url: '../main/main?role=' + that.data.myrole + '&myName=' + that.data.name
+                  // url: '../main/main?role=' + that.data.myrole + '&myName=' + that.data.name
+                  // url: '../main/main?myName=' + that.data.name
+                  url: '../main/main'
                 })
               }
             }).onFail(function (data) {

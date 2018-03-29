@@ -7,9 +7,9 @@ Page({
 	data: {
 		friend_name:''
 	},
-	onShow: function() {
-		//console.log(getCurrentPages())
-	},
+	// onShow: function() {
+	// 	//console.log(getCurrentPages())
+	// },
   impatient: function() {
     // wx.redirectTo({
     //   url: '../login/login?role=patient'
@@ -26,8 +26,11 @@ Page({
 
   // 跳转登录界面，带入角色参数
   gotoLogin:function(role){
+    getApp().globalData.role = role;
+    // console.log('>>>>>>>>>>>>>>>>>>>>>>' + getApp().globalData.role);
     wx.redirectTo({
-      url: '../login/login?role=' + role
+      // url: '../login/login?role=' + role
+      url: '../login/login'
     })
   }
 })

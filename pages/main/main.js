@@ -8,14 +8,14 @@ Page({
         search_friend: false,
         show_mask: false,
         myName: '',
-        myrole: '',
+        // myrole: '',
         member: []
         // isDoctor:false
     },
     onLoad: function (option) {
         this.setData({
-            myName: option.myName,
-            myrole: option.role
+          myName: getApp().globalData.name
+            // myrole: option.role
             // isDoctor: option.doctor
         })
         //console.log("wjy")
@@ -181,7 +181,8 @@ Page({
       var that = this
       // console.log('main.js.tab_setting.role=' + that.data.myrole)
         wx.redirectTo({
-            url: '../settings/settings?role=' + that.data.myrole
+            // url: '../settings/settings?role=' + that.data.myrole
+          url: '../settings/settings'
         })
         
     },
@@ -199,7 +200,7 @@ Page({
         var that = this
         //console.log(event)
         var nameList = {
-            myName: that.data.myName,
+            // myName: that.data.myName,
             your: event.target.dataset.username
         }
         wx.navigateTo({
@@ -208,7 +209,8 @@ Page({
     },
     into_info: function (event) {
         wx.navigateTo({
-            url: '../friend_info/friend_info?yourname=' + event.target.dataset.username
+            // url: '../friend_info/friend_info?yourname=' + event.target.dataset.username
+          url: '../friend_info/friend_info'
         })
     }
 

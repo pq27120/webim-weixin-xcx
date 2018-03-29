@@ -3,9 +3,10 @@ Page({
 		yourname:''
 	},
 	onLoad: function(option) {
-		console.log(option)
+		// console.log(option)
 		this.setData({
-			yourname: option.yourname
+			// yourname: option.yourname
+      yourname: getApp().globalData.name
 		})
 	}
 })

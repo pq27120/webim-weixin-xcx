@@ -5,13 +5,14 @@ var WebIM = WebIM.default
 Page({
 	data: {
     isDoctor: '',
-		username:''
+		username: ''
 	},
 	onLoad: function(option) {
-		var myUsername = wx.getStorageSync('myUsername')
+		// var myUsername = wx.getStorageSync('myUsername')
 		this.setData({
-      isDoctor: option.role == 'doctor',
-			username: myUsername
+      // isDoctor: option.role === 'doctor',
+      isDoctor: getApp().globalData.role === 'doctor',
+      username: getApp().globalData.name
 		})
     // var that = this
     // console.log('onload.isDoctor=' + that.data.isDoctor)
@@ -27,15 +28,18 @@ Page({
 		})
 	},
 	person: function() {
-		var myUsername = wx.getStorageSync('myUsername')
+		// var myUsername = wx.getStorageSync('myUsername')
+    // console.log('myUsername=' + myUsername)
 		wx.navigateTo({
-			url: '../friend_info/friend_info?yourname=' + myUsername
+			// url: '../friend_info/friend_info?yourname=' + myUsername
+      url: '../friend_info/friend_info'
 		})
 	},
   // 医生咨询费设置界面
   setting_money:function(){
     wx.navigateTo({
-      url: '../setting_money/setting_money?yourname=' + wx.getStorageSync('myUsername')
+      // url: '../setting_money/setting_money?yourname=' + wx.getStorageSync('myUsername')
+      url: '../setting_money/setting_money'
     })
   },
 	logout: function() {
