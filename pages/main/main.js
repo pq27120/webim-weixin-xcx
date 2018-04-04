@@ -23,8 +23,9 @@ Page({
         //console.log('main js .... role = ' + that.data.myrole)
     },
     onShow: function () {
-        var that = this
+        // var that = this
         // //console.log(WebIM.conn)
+        /** 
         getApp().globalData.jim.getFriendList().onSuccess(function (data) {
           var member = []
           if(data.code == 0){
@@ -36,6 +37,31 @@ Page({
               key: 'member',
               data: that.data.member
             })       
+          }
+        }) */
+
+        var that = this
+        // 如果是医生，请求患者列表；如果是患者，请求医生列表
+        wx.request({
+          url: (getApp().globalData.role === 1) ? 'http://120.78.132.250:8082/fk_api/user/patientFriendList' : 'http://120.78.132.250:8082/fk_api/user/doctorFriendList',
+          data: { "wechatId": "1" },
+          header: { 'Content-Type': "application/x-www-form-urlencoded" },
+          method: 'post',
+          success: function (res) {
+            //  console.log('>>>> requst fk doctor:' + res.data.data);
+            // 0 为未注册用户, 1 为医生, 2 为患者, 3 为医生患者用户
+            // getApp().globalData.role = (res.data.data === 1) ? 'doctor' : 'patient'
+            var member = []
+            member = res.data.data
+            if(member){
+              that.setData({
+                member: member
+              })
+              wx.setStorage({
+                key: 'member',
+                data: that.data.member
+              }) 
+            }    
           }
         })
 

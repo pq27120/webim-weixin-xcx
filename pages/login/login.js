@@ -78,7 +78,19 @@ Page({
               // console.log(that.data.myrole);
               if(data.code == 0) {
                 getApp().globalData.name = that.data.name;
-                // console.log('username=' + getApp().globalData.name)
+                
+                wx.request({
+                  url: 'http://120.78.132.250:8082/fk_api/user/userInfo',
+                  data:{ "wechatId": "1" },
+                  header: { 'Content-Type': "application/x-www-form-urlencoded" },
+                  method: 'post',
+                  success: function (res) {
+                    // console.log('>>>> requst fk doctor:' + res.data.msg);
+                    // 0 为未注册用户, 1 为医生, 2 为患者, 3 为医生患者用户
+                    getApp().globalData.role = (res.data.data === 1) ? 'doctor' : 'patient'
+                  }
+                })
+
                 wx.redirectTo({
                   // 登录成功，跳转到主页面
                   // url: '../main/main?role=' + that.data.myrole + '&myName=' + that.data.name

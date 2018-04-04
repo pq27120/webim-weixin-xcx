@@ -11,10 +11,12 @@ Page({
         var member = wx.getStorageSync('member')
         var myName = wx.getStorageSync('myUsername')
         var array = []
-        for (var i = 0; i < member.length; i++) {
-            if (wx.getStorageSync(member[i].name + myName) != '') {
-                array.push(wx.getStorageSync(member[i].name + myName)[wx.getStorageSync(member[i].name + myName).length - 1])
-            }
+        if(member){
+          for (var i = 0; i < member.length; i++) {
+              if (wx.getStorageSync(member[i].name + myName) != '') {
+                  array.push(wx.getStorageSync(member[i].name + myName)[wx.getStorageSync(member[i].name + myName).length - 1])
+              }
+          }
         }
         //console.log(array，'1')
         this.setData({
