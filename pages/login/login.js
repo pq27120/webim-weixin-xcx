@@ -79,6 +79,7 @@ Page({
               if(data.code == 0) {
                 getApp().globalData.name = that.data.name;
                 
+                // 登录并获取用户角色
                 wx.request({
                   url: 'http://120.78.132.250:8082/fk_api/user/userRole',
                   data:{ "wechatId": "1" },
@@ -93,8 +94,6 @@ Page({
 
                 wx.redirectTo({
                   // 登录成功，跳转到主页面
-                  // url: '../main/main?role=' + that.data.myrole + '&myName=' + that.data.name
-                  // url: '../main/main?myName=' + that.data.name
                   url: '../main/main'
                 })
               }

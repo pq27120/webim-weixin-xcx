@@ -65,10 +65,14 @@ Page({
 	    	// 	title: '消息发送成功！',
 	    	// 	duration: 1500
 	    	// })
+        var friendnames = [];
+        friendnames.push(that.data.friend_name);
+        console.log('>>>>>>>>>>>>>>' + friendnames);
 
         // 好友添加接口调用
         wx.request({
           url: 'http://120.78.132.250:8082/fk_api/addFriend/' + that.data.friend_name,
+          data: friendnames,
           header: { 'Content-Type': "application/x-www-form-urlencoded" },
           method: 'post',
           success: function (res) {
@@ -76,8 +80,17 @@ Page({
             // 0 为未注册用户, 1 为医生, 2 为患者, 3 为医生患者用户
             // getApp().globalData.role = (res.data.data === 1) ? 'doctor' : 'patient'
             wx.showToast({
-              title: '消息发送成功！',
-              duration: 1500
+              title: '添加好友成功',
+              duration: 1500,
+              success: function () {
+                // console.log('haha');
+                setTimeout(function () {
+                  //要延时执行的代码
+                  wx.redirectTo({
+                    url: '../main/main'
+                  })
+                }, 1500) //延迟时间
+              }
             })
             // console.log('>>>>' + that.data.friend_name)
           }
