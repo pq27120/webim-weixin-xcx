@@ -80,7 +80,7 @@ Page({
                 getApp().globalData.name = that.data.name;
                 
                 wx.request({
-                  url: 'http://120.78.132.250:8082/fk_api/user/userInfo',
+                  url: 'http://120.78.132.250:8082/fk_api/user/userRole',
                   data:{ "wechatId": "1" },
                   header: { 'Content-Type': "application/x-www-form-urlencoded" },
                   method: 'post',

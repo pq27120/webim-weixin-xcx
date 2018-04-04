@@ -14,10 +14,10 @@
 </view>
 <view class="body">
 	<view class="contain">
-		<view class="chat" bindtap="into_inform">
+		<!-- view class="chat" bindtap="into_inform">
 			<image src="../../images/chat.png"></image>
 			<text>申请与通知</text>
-		</view>
+		</view -->
 		<!-- <view class="chat_groups" bindtap="into_groups">
 			<image src="../../images/chat-list.png"></image>
 			<text>群组</text>

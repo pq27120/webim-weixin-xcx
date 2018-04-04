@@ -44,7 +44,7 @@ Page({
         // 如果是医生，请求患者列表；如果是患者，请求医生列表
         wx.request({
           url: (getApp().globalData.role === 1) ? 'http://120.78.132.250:8082/fk_api/user/patientFriendList' : 'http://120.78.132.250:8082/fk_api/user/doctorFriendList',
-          data: { "wechatId": "1" },
+          data: { "wechatId": getApp().globalData.name },
           header: { 'Content-Type': "application/x-www-form-urlencoded" },
           method: 'post',
           success: function (res) {
