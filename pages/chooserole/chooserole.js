@@ -24,6 +24,12 @@ Page({
     this.gotoLogin('doctor');
   },
 
+  register:function(){
+    wx.redirectTo({
+      url: '../register/register'
+    })
+  },
+
   // 跳转登录界面，带入角色参数
   gotoLogin:function(role){
     getApp().globalData.role = role;

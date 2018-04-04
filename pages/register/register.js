@@ -5,8 +5,12 @@ var WebIM = WebIM.default
 Page({
 	data: {
 		username: '',
-		password: ''
+		password: '',
+    isDoctor: ''
 	},
+  onLoad: function (option) {
+    isDoctor: getApp().globalData.role === 'doctor'
+  },
 	bindUsername: function(e) {
 		this.setData({
 			username: e.detail.value

@@ -5,7 +5,8 @@
 
 <view class="contact">
    <view>
-    已经选过角色，直接 <text style='text-decoration:underline;' bindtap='impatient'>登录</text>
+    直接 <text style='text-decoration:underline;' bindtap='impatient'>登录</text>
+    我要 <text style='text-decoration:underline;' bindtap='register'>注册</text>
    </view>
 </view>
 

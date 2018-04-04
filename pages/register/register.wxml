@@ -2,17 +2,45 @@
 	<view class="register_img">
 		<image src="../../images/logo.png"></image>
 	</view>
-	<view class="register_user">
-		<input type="text" placeholder="账号" placeholder-style="color:rgb(173,185,193)" bindinput="bindUsername"/>
-	</view>
-	<view class="register_pwd">
+  <!-- 如果是医生注册，需要填写信息如下 -->
+  <view wx:if='{{isDoctor === true}}'>
+    <view class="register_user">
+      <input type="text" placeholder="医生姓名" placeholder-style="color:rgb(173,185,193)" bindinput="bindUsername"/>
+    </view>
+    <view class="register_user">
+      <input type="text" placeholder="所在医院" placeholder-style="color:rgb(173,185,193)" bindinput="bindUsername"/>
+    </view>
+    <view class="register_user">
+      <input type="text" placeholder="所在科室" placeholder-style="color:rgb(173,185,193)" bindinput="bindUsername"/>
+    </view>
+    <view class="register_user">
+      <input type="text" placeholder="医生等级" placeholder-style="color:rgb(173,185,193)" bindinput="bindUsername"/>
+    </view>
+  </view>
+
+  <!-- 如果是患者注册，需要填写信息如下 -->
+  <view wx:else>
+    <view class="register_user">
+      <input type="text" placeholder="病人姓名" placeholder-style="color:rgb(173,185,193)" bindinput="bindUsername"/>
+    </view>
+    <view class="register_user">
+      <input type="text" placeholder="性别" placeholder-style="color:rgb(173,185,193)" bindinput="bindUsername"/>
+    </view>
+    <view class="register_user">
+      <input type="text" placeholder="手机号码" placeholder-style="color:rgb(173,185,193)" bindinput="bindUsername"/>
+    </view>
+    <view class="register_user">
+      <input type="text" placeholder="生日" placeholder-style="color:rgb(173,185,193)" bindinput="bindUsername"/>
+    </view>  
+  </view>
+	<!-- <view class="register_pwd">
 		<input type="text" password placeholder="密码" placeholder-style="color:rgb(173,185,193)" bindinput="bindPassword"/>
-	</view>
-	<view class="register_text">
+	</view> -->
+	<!-- view class="register_text">
 		<view>
 			<text>已有账号?</text>
 			<navigator url="../login/login" redirect hover-class="navigator-hover">登 录</navigator>
 		</view>
-	</view>
+	</view -->
 	<button  class="register_btn" hover-class="btn_hover" bindtap="register">注 册</button>
 </view>
