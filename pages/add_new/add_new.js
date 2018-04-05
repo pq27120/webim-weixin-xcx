@@ -71,7 +71,7 @@ Page({
 
         // 好友添加接口调用
         wx.request({
-          url: 'http://120.78.132.250:8082/fk_api/addFriend/' + that.data.friend_name,
+          url: getApp().globalData.api.addFriend + that.data.friend_name,
           data: friendnames,
           header: { 'Content-Type': "application/x-www-form-urlencoded" },
           method: 'post',

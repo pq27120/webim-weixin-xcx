@@ -1,42 +1,66 @@
-// var strophe = require('../../utils/strophe.js')
-// var WebIM = require('../../utils/WebIM.js')
-// var WebIM = WebIM.default
-
 //WebIM.conn  实例化的  
 Page({
 	data: {
 		friend_name:''
 	},
-	// onShow: function() {
-	// 	//console.log(getCurrentPages())
-	// },
+
+  onLoad: function(option){
+    this.initUserInfoData();
+  },
+
+  initUserInfoData(){
+    wx.getUserInfo({
+      success: res => {
+        // console.log('>>>>>>>>>' + res.userInfo);
+        // 0. 授权获取用户信息
+        this.setGlobalData(res);
+        // 1. 后台判断获取用户角色（0.新用户；1.为医生; 2.为患者; 3 为医生患者用户)
+        this.getUserRole();
+      }
+    })
+  },
+
+  setGlobalData(res){
+    getApp().globalData.userInfo = res.userInfo;
+    getApp().globalData.encryptedData = res.encryptedData;
+  },
+
+  getUserRole(){
+    wx.request({
+      url: getApp().globalData.api.roleInfo,
+      data: { "wechatId": "unionId" },
+      header: { 'Content-Type': "application/x-www-form-urlencoded" },
+      method: 'post',
+      success: function (res) {
+        // 0 为未注册用户, 1 为医生, 2 为患者, 3 为医生患者用户
+        // console.log('remote role=' + res.data.data);
+        // getApp().globalData.role = res.data.data;
+        getApp().globalData.role = 0;
+        // 2. 新用户，选角色，选择医生完善医生信息；选择患者完善患者信息
+        var role = getApp().globalData.role;
+        // console.log('>>>>>>>>>>>role=' + role);
+        if (role != 0) {// 3. 非新用户，直接登录
+          wx.redirectTo({
+            url: '../login/login'
+          })
+        }
+      }
+    })
+  },
+  // 选择患者角色
   impatient: function() {
-    // wx.redirectTo({
-    //   url: '../login/login?role=patient'
-    // })
-    this.gotoLogin('patient');
+    getApp().globalData.role = 'patient';
+    this.register();
 	},
-  // 医生角色
+  // 选择医生角色
   imdoctor:function(){
-    // wx.redirectTo({
-    //   url: '../login/login?role=doctor'
-    // })
-    this.gotoLogin('doctor');
+    getApp().globalData.role = 'doctor';
+    this.register();
   },
 
   register:function(){
     wx.redirectTo({
       url: '../register/register'
-    })
-  },
-
-  // 跳转登录界面，带入角色参数
-  gotoLogin:function(role){
-    getApp().globalData.role = role;
-    // console.log('>>>>>>>>>>>>>>>>>>>>>>' + getApp().globalData.role);
-    wx.redirectTo({
-      // url: '../login/login?role=' + role
-      url: '../login/login'
     })
   }
 })
