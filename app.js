@@ -349,6 +349,20 @@ App({
         jim: null,
         appkey: '5da10dc227e8d4125971ed9b',
         role: null,
-        name: null
+        name: null,
+        api: {
+          // 角色信息
+          roleInfo: 'http://120.78.132.250:8082/fk_api/user/userRole',
+          // 添加好友
+          addFriend: 'http://120.78.132.250:8082/fk_api/addFriend/',
+          // 患者好友列表
+          patientFriendList: 'http://120.78.132.250:8082/fk_api/user/patientFriendList',
+          // 医生好友列表
+          doctorFriendList: 'http://120.78.132.250:8082/fk_api/user/doctorFriendList',
+          // 医生注册
+          doctorLogin: 'http://120.78.132.250:8082/fk_api/user/doctorLogin',
+          // 患者注册
+          patientLogin: 'http://120.78.132.250:8082/fk_api/user/patientLogin'
+        }
     }
 })
