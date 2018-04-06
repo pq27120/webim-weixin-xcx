@@ -6,8 +6,8 @@ Page({
   data: {
     // name: 'zzf1',
     // psd: 'z',
-    name: 'ceshi1',
-    psd: 'ceshi1',
+    name: '',//ceshi1
+    psd: '',//ceshi1
     grant_type: "password",
     jim: null
   },
@@ -46,6 +46,8 @@ Page({
         //data.code 返回码
         //data.message 描述
         // console.log(that.data.myrole);
+        getApp().globalData.loginName = that.data.name;
+        getApp().globalData.loginPassWord = that.data.psd;
         if (data.code == 0) {
           that.getUserRole();
         }
@@ -63,15 +65,15 @@ Page({
       method: 'post',
       success: function (res) {
         // 0 为未注册用户, 1 为医生, 2 为患者, 3 为医生患者用户
-        getApp().globalData.role = 1;
+        // getApp().globalData.role = 1;
         // 2. 新用户，选角色，选择医生完善医生信息；选择患者完善患者信息
         var role = getApp().globalData.role;
         // console.log('>>>>>>>>>>>role=' + role);
-        if (role != 0) {// 3. 非新用户，直接登录
-          wx.redirectTo({
-            url: '../main/main'
-          })
-        }
+        // if (role != 0) {// 3. 非新用户，直接登录
+        wx.redirectTo({
+          url: '../main/main'
+        })
+        // }
       }
     })
   }

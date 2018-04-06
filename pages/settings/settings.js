@@ -28,6 +28,10 @@ Page({
       url: '../chat/chat'
     })
   },
+  switchChange: function (e) {
+    // console.log('switch=', e.detail.value)
+    getApp().globalData.autoLogin = e.detail.value;
+  },
   person: function () {
     // var myUsername = wx.getStorageSync('myUsername')
     // console.log('myUsername=' + myUsername)
