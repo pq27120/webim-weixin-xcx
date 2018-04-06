@@ -1,6 +1,8 @@
 <view class="info_title">
 	<view class="head_pic">
-		<image src="../../images/default.png"></image>
+    <image src="{{ yourheadimg }}"></image>
+		<!-- <image src="../../images/default.png"></image>  -->
+    <!-- <image src="https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKdhOkBNYb5b8DseYpynjuRoaONof2a9v1LelBJX8XfhgMNgYmPheUtaHSaiapZjWAiaHLAzFd1hNww/0"></image> -->
 		<text>{{ yourname }}</text>
 	</view>
 	<!-- <view class="contact">
@@ -12,11 +14,11 @@
 
 <view class="message">
 	<view class="name">
-		<text>姓名</text>
+		<text>昵称</text>
 		<text>{{ yourname }}</text>
 	</view>
-	<view class="ID">
+	<!-- <view class="ID">
 		<text>咨询号</text>
 		<text>{{ yourname }}</text>
-	</view>
+	</view> -->
 </view>

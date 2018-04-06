@@ -5,12 +5,12 @@
     <button type="default" bindtap="imdoctor"> 我是医生</button>
   </view>
 
-  <view class="contact">
+  <!-- <view class="contact">
     <view>
       直接 <text style='text-decoration:underline;' bindtap='impatient'>登录</text>
       我要 <text style='text-decoration:underline;' bindtap='register'>注册</text>
     </view>
-  </view>
+  </view> -->
 
 
 

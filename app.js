@@ -350,6 +350,7 @@ App({
         appkey: '5da10dc227e8d4125971ed9b',
         role: null,
         name: null,
+        encryptedData: null,
         api: {
           // 角色信息
           roleInfo: 'http://120.78.132.250:8082/fk_api/user/userRole',

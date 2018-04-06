@@ -1,14 +1,14 @@
 //WebIM.conn  实例化的  
 Page({
-	data: {
-		friend_name:''
-	},
+  data: {
+    friend_name: ''
+  },
 
-  onLoad: function(option){
+  onLoad: function (option) {
     this.initUserInfoData();
   },
 
-  initUserInfoData(){
+  initUserInfoData() {
     wx.getUserInfo({
       success: res => {
         // console.log('>>>>>>>>>' + res.userInfo);
@@ -20,12 +20,13 @@ Page({
     })
   },
 
-  setGlobalData(res){
+  setGlobalData(res) {
     getApp().globalData.userInfo = res.userInfo;
+    // console.log(getApp().globalData.userInfo);
     getApp().globalData.encryptedData = res.encryptedData;
   },
 
-  getUserRole(){
+  getUserRole() {
     wx.request({
       url: getApp().globalData.api.roleInfo,
       data: { "wechatId": "unionId" },
@@ -33,9 +34,9 @@ Page({
       method: 'post',
       success: function (res) {
         // 0 为未注册用户, 1 为医生, 2 为患者, 3 为医生患者用户
-        console.log('remote role=' + res.data.data);
+        // console.log('remote role=' + res.data.data);
         // getApp().globalData.role = res.data.data;
-        getApp().globalData.role = 0;
+        getApp().globalData.role = 1;
         // 2. 新用户，选角色，选择医生完善医生信息；选择患者完善患者信息
         var role = getApp().globalData.role;
         // console.log('>>>>>>>>>>>role=' + role);
@@ -48,17 +49,17 @@ Page({
     })
   },
   // 选择患者角色
-  impatient: function() {
-    getApp().globalData.role = 'patient';
+  impatient: function () {
+    getApp().globalData.role = 2;
     this.register();
-	},
+  },
   // 选择医生角色
-  imdoctor:function(){
-    getApp().globalData.role = 'doctor';
+  imdoctor: function () {
+    getApp().globalData.role = 1;
     this.register();
   },
 
-  register:function(){
+  register: function () {
     wx.redirectTo({
       url: '../register/register'
     })
