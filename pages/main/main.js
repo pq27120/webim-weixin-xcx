@@ -44,7 +44,7 @@ Page({
     // 如果是医生，请求患者列表；如果是患者，请求医生列表
     wx.request({
       url: (getApp().globalData.role === 1) ? getApp().globalData.api.patientFriendList : getApp().globalData.api.doctorFriendList,
-      data: { "wechatId": getApp().globalData.name },
+      data: { "wechatId": getApp().globalData.userInfo.nickName },
       header: { 'Content-Type': "application/x-www-form-urlencoded" },
       method: 'post',
       success: function (res) {

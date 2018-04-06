@@ -12,7 +12,7 @@ Page({
   },
   onLoad: function (option) {
     this.setData({
-      isDoctor: getApp().globalData.role === 'doctor'
+      isDoctor: getApp().globalData.role === 1
     });
     // console.log('getApp().globalData.role=' + this.data.isDoctor);
   },
@@ -33,7 +33,7 @@ Page({
     // console.log(4);
     // console.log(this.data.doctorInfo.name);
     wx.request({
-      url: getApp().globalData.api.doctorLogin + "?wechatId=" + getApp().globalData.name,
+      url: getApp().globalData.api.doctorLogin + "?wechatId=" + getApp().globalData.userInfo.nickName,
       data: {
         "departmentId": this.data.doctorInfo.department,
         "grade": this.data.doctorInfo.grade,
@@ -57,7 +57,7 @@ Page({
     // console.log(this.data.patientInfo.birthday);
     // console.log(this.data.patientInfo.sex);
     wx.request({
-      url: getApp().globalData.api.patientLogin + "?wechatId=" + getApp().globalData.name,
+      url: getApp().globalData.api.patientLogin + "?wechatId=" + getApp().globalData.userInfo.nickName,
       data: {
         "birthday": this.data.patientInfo.birthday,
         "mobile": this.data.patientInfo.tel,
