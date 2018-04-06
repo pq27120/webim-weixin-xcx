@@ -1,13 +1,17 @@
-<view class='contact'>
-<button type="default" bindtap="impatient"> 我是患者 </button>
-<button type="default" bindtap="imdoctor"> 我是医生</button>
-</view>
 
-<view class="contact">
-   <view>
-    直接 <text style='text-decoration:underline;' bindtap='impatient'>登录</text>
-    我要 <text style='text-decoration:underline;' bindtap='register'>注册</text>
-   </view>
-</view>
+
+  <view class='contact'>
+    <button type="default" bindtap="impatient"> 我是患者 </button>
+    <button type="default" bindtap="imdoctor"> 我是医生</button>
+  </view>
+
+  <view class="contact">
+    <view>
+      直接 <text style='text-decoration:underline;' bindtap='impatient'>登录</text>
+      我要 <text style='text-decoration:underline;' bindtap='register'>注册</text>
+    </view>
+  </view>
+
+
 
 
