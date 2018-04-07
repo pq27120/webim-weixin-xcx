@@ -37,7 +37,7 @@ Page({
         // 0 为未注册用户, 1 为医生, 2 为患者, 3 为医生患者用户
         // console.log('remote role=' + res.data.data);
         // getApp().globalData.role = res.data.data;
-        getApp().globalData.role = 1;
+        getApp().globalData.role = 0;
         // 2. 新用户，选角色，选择医生完善医生信息；选择患者完善患者信息
         var role = getApp().globalData.role;
         // var autologin = getApp().globalData.autoLogin
@@ -47,13 +47,13 @@ Page({
           // if (autologin) {//有账号密码，直接登录
           //   // var that = this;
           //   console.log('autologin')
-            that.jimlogin();
+          that.jimlogin();
           // } else {
-            // wx.redirectTo({
-            //   url: '../login/login'
-            // })
-            // var that = this;
-            // that.login();
+          // wx.redirectTo({
+          //   url: '../login/login'
+          // })
+          // var that = this;
+          // that.login();
           // }
         }
       }
@@ -107,31 +107,10 @@ Page({
       }
     }).onFail(function (data) {
       //同上
-      console.log('账号密码错误，请手工登录')
+      console.log('账号或密码错误，请手工登录')
       that.login();
     })
   }
-
-  // getUserRole: function () {
-  //   wx.request({
-  //     url: getApp().globalData.api.roleInfo,
-  //     data: { "wechatId": "unionId" },
-  //     header: { 'Content-Type': "application/x-www-form-urlencoded" },
-  //     method: 'post',
-  //     success: function (res) {
-  //       // 0 为未注册用户, 1 为医生, 2 为患者, 3 为医生患者用户
-  //       getApp().globalData.role = 1;
-  //       // 2. 新用户，选角色，选择医生完善医生信息；选择患者完善患者信息
-  //       var role = getApp().globalData.role;
-  //       // console.log('>>>>>>>>>>>role=' + role);
-  //       if (role != 0) {// 3. 非新用户，直接登录
-  //         wx.redirectTo({
-  //           url: '../main/main'
-  //         })
-  //       }
-  //     }
-  //   })
-  // }
 })
 
 

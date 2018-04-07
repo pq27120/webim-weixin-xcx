@@ -8,11 +8,15 @@ Page({
     // password: '',
     doctorInfo: {},
     patientInfo: {},
+    registername:  '',
+    registersex: '',
     isDoctor: ''
   },
   onLoad: function (option) {
     this.setData({
-      isDoctor: getApp().globalData.role === 1
+      isDoctor: getApp().globalData.role === 1,
+      registername: getApp().globalData.userInfo.nickName,
+      registersex: (getApp().globalData.userInfo.gender == 1) ? '男' : '女'
     });
     // console.log('getApp().globalData.role=' + this.data.isDoctor);
   },
@@ -51,18 +55,19 @@ Page({
     })
   },
 
-  registerPatient: function () {
+  registerPatient: function (e) {
     // console.log(this.data.patientInfo.name);
     // console.log(this.data.patientInfo.tel);
     // console.log(this.data.patientInfo.birthday);
     // console.log(this.data.patientInfo.sex);
+    // console.log(e.detail.value);
     wx.request({
       url: getApp().globalData.api.patientLogin + "?wechatId=" + getApp().globalData.userInfo.nickName,
       data: {
         "birthday": this.data.patientInfo.birthday,
         "mobile": this.data.patientInfo.tel,
         "name": this.data.patientInfo.name,
-        "sex": this.data.patientInfo.sex
+        "sex": (this.data.patientInfo.sex == '男') ? '1' : '0'
       },
       header: { 'Content-Type': "application/json" },
       method: 'post',

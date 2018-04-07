@@ -39,16 +39,7 @@
 	<text>自动登录</text>
 	<switch checked/>
 </view>  -->
-<button type="warn" bindtap="logout">退出登录({{ username }})</button>
-
-
-
-
-
-
-
-
-
+<!-- <button type="warn" bindtap="logout">退出登录({{ username }})</button> -->
 
 <view class="chatRoom_tab">
   <view class="contacts" bindtap="tab_contact">

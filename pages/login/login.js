@@ -48,6 +48,10 @@ Page({
         // console.log(that.data.myrole);
         getApp().globalData.loginName = that.data.name;
         getApp().globalData.loginPassWord = that.data.psd;
+
+        console.log('login.name>>>' + getApp().globalData.loginName);
+        console.log('login.password>>>' + getApp().globalData.loginPassWord);
+
         if (data.code == 0) {
           that.getUserRole();
         }
