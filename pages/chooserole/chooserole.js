@@ -162,8 +162,8 @@ Page({
 
   jimlogin: function () {
     var that = this
-    var userName = wx.getStorageSync('userName');
-    var userPassword = wx.getStorageSync('userPassword');
+    // var userName = wx.getStorageSync('userName');
+    // var userPassword = wx.getStorageSync('userPassword');
 
     // console.log('>>>' + userName);
     // console.log('>>>' + userPassword);
@@ -178,8 +178,8 @@ Page({
       // getApp().globalData.loginPassWord = that.data.psd;
 
       // 同步方式存储表单数据
-      wx.setStorageSync('userName', objData.userName);
-      wx.setStorageSync('userPassword', objData.userPassword);
+      // wx.setStorageSync('userName', objData.userName);
+      // wx.setStorageSync('userPassword', objData.userPassword);
 
       if (data.code == 0) {
         // that.getUserRole();
