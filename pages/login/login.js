@@ -49,8 +49,8 @@ Page({
         getApp().globalData.loginName = that.data.name;
         getApp().globalData.loginPassWord = that.data.psd;
 
-        console.log('login.name>>>' + getApp().globalData.loginName);
-        console.log('login.password>>>' + getApp().globalData.loginPassWord);
+        // console.log('login.name>>>' + getApp().globalData.loginName);
+        // console.log('login.password>>>' + getApp().globalData.loginPassWord);
 
         if (data.code == 0) {
           that.getUserRole();
@@ -64,7 +64,7 @@ Page({
   getUserRole: function () {
     wx.request({
       url: getApp().globalData.api.roleInfo,
-      data: { "wechatId": "unionId" },
+      data: { "wechatId": getApp().globalData.openid },
       header: { 'Content-Type': "application/x-www-form-urlencoded" },
       method: 'post',
       success: function (res) {

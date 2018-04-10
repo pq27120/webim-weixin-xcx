@@ -350,7 +350,8 @@ App({
     signature: null,
     iv: null,
     sessionKey: null,
-    unionId: null,
+    unionid: null,
+    openid: null,
 
     chatMsg: [],
     jim: null,

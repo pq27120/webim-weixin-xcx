@@ -56,25 +56,28 @@ Page({
       success: function (res) {
         // console.log('wx login res=' + res);
         console.log('wx login res.code=' + res.code)
-        // if (res.code) {
-        //   wx.request({
-        //     url: getApp().globalData.api.wechatLogin,
-        //     data: {
-        //       "code": res.code
-        //     },
-        //     header: { 'Content-Type': "application/x-www-form-urlencoded" },
-        //     method: 'get',
-        //     success: function (res) {
-        //       console.log('res.data.sessionKey=' + res.data.sessionKey);
-        //       console.log('res.data.unionid=' + res.data.unionid);
-        //       console.log('res.data.openId=' + res.data.openId);
-        //       // getApp().globalData.sessionKey = res.data.sessionKey;
+        if (res.code) {
+          wx.request({
+            url: getApp().globalData.api.wechatLogin,
+            data: {
+              "code": res.code
+            },
+            header: { 'Content-Type': "application/x-www-form-urlencoded" },
+            method: 'get',
+            success: function (res) {
+              console.log(res);
+              console.log('res.data.sessionKey=' + res.data.data.sessionKey);
+              console.log('res.data.unionid=' + res.data.data.unionid);
+              console.log('res.data.openid=' + res.data.data.openid);
+              getApp().globalData.sessionKey = res.data.data.sessionKey;
+              getApp().globalData.unionid = res.data.data.unionid;
+              getApp().globalData.openid = res.data.data.openid;
 
-        //     }
-        //   })
-        // } else {
-        //   console.log('登录失败！' + res.errMsg)
-        // }
+            }
+          })
+        } else {
+          console.log('登录失败！' + res.errMsg)
+        }
       }
     });
   },
@@ -105,18 +108,17 @@ Page({
   },
 
   getUserRole() {
-    console.log(0);
     var that = this
     wx.request({
       url: getApp().globalData.api.roleInfo,
-      data: { "wechatId": "unionId" },
+      data: { "wechatId": getApp().globalData.openid },
       header: { 'Content-Type': "application/x-www-form-urlencoded" },
       method: 'post',
       success: function (res) {
         // 0 为未注册用户, 1 为医生, 2 为患者, 3 为医生患者用户
         // console.log('remote role=' + res.data.data);
         getApp().globalData.role = res.data.data;
-        getApp().globalData.role = 1;
+        // getApp().globalData.role = 1;
         // 2. 新用户，选角色，选择医生完善医生信息；选择患者完善患者信息
         var role = getApp().globalData.role;
         // var autologin = getApp().globalData.autoLogin
