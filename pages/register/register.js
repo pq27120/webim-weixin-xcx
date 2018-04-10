@@ -26,7 +26,9 @@ Page({
     if (this.data.isDoctor) {
       this.registerDoctor();
     } else {
-      this.registerPatient();
+      if (this.checkPatient()) {
+        this.registerPatient();
+      }
     }
   },
 
@@ -80,6 +82,21 @@ Page({
         })
       }
     })
+  },
+
+  checkPatient: function (e) {
+    var telregular = /^\d{11}$g/;
+    var tel = this.data.patientInfo.tel;
+
+    if (!telregular.test(tel)) {
+      wx.showToast({
+        title: '手机号码不正确',
+        duration: 2000
+      })
+      return false;
+    }
+
+    return true;
   },
 
   bindDoctorName: function (e) {
