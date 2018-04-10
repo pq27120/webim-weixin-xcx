@@ -1,52 +1,57 @@
 <view class="register">
-	<view class="register_img">
-		<image src="../../images/logo.png"></image>
-	</view>
+  <view class="register_img">
+    <image src="../../images/logo.png"></image>
+  </view>
   <!-- 如果是医生注册，需要填写信息如下 -->
   <view wx:if='{{isDoctor === true}}'>
     <view class="register_user">
-      <input type="text" placeholder="医生姓名(昵称)" value='{{registername}}' disabled='disabled' placeholder-style="color:rgb(173,185,193)" bindinput="bindDoctorName"/>
+      <input type="text" placeholder="医生姓名(昵称)" value='{{registername}}' disabled='disabled' placeholder-style="color:rgb(173,185,193)" bindinput="bindDoctorName" />
     </view>
     <view class="register_user">
-      <input type="text" placeholder="所在医院" placeholder-style="color:rgb(173,185,193)" bindinput="bindDoctorHospital"/>
+      <input type="text" placeholder="所在医院" placeholder-style="color:rgb(173,185,193)" bindinput="bindDoctorHospital" />
     </view>
     <view class="register_user">
-      <input type="text" placeholder="所在科室" placeholder-style="color:rgb(173,185,193)" bindinput="bindDoctorDept"/>
+      <input type="text" placeholder="所在科室" placeholder-style="color:rgb(173,185,193)" bindinput="bindDoctorDept" />
     </view>
     <view class="register_user">
-      <input type="text" placeholder="医生等级" placeholder-style="color:rgb(173,185,193)" bindinput="bindDoctorGrade"/>
+      <picker bindchange="bindDoctorGrade" value="{{doctorgradeindex}}" range="{{doctorgrade}}">
+      <!-- 11111{{doctorgrade[index]}} -->
+         <view class="picker">
+          <input type="text" value='{{doctorgrade[doctorgradeindex]}}' placeholder="医生等级" placeholder-style="color:rgb(173,185,193)" />
+        </view> 
+      </picker>
     </view>
   </view>
 
   <!-- 如果是患者注册，需要填写信息如下 -->
   <view wx:else>
     <view class="register_user">
-      <input type="text" placeholder="病人姓名(昵称)" value='{{registername}}' name='name' placeholder-style="color:rgb(173,185,193)" bindinput="bindPatientName"/>
+      <input type="text" placeholder="病人姓名(昵称)" value='{{registername}}' name='name' placeholder-style="color:rgb(173,185,193)" bindinput="bindPatientName" />
     </view>
     <view class="register_user">
-      <input type="text" placeholder="性别"  value='{{registersex}}' placeholder-style="color:rgb(173,185,193)" bindinput="bindPatientSex"/>
+      <input type="text" placeholder="性别" value='{{registersex}}' placeholder-style="color:rgb(173,185,193)" bindinput="bindPatientSex" />
     </view>
     <view class="register_user">
-      <input type="text" placeholder="手机号码" placeholder-style="color:rgb(173,185,193)" bindinput="bindPatientTel"/>
+      <input type="text" placeholder="手机号码" placeholder-style="color:rgb(173,185,193)" bindinput="bindPatientTel" />
     </view>
     <view class="register_user">
       <!-- <input type="text" placeholder="生日" placeholder-style="color:rgb(173,185,193)" bindinput="bindPatientBrithday"/> -->
-      <picker mode="date" start="1900-01-01" end="1980-01-01" bindchange="bindPatientBrithday">  
-        <view class="picker">  
+      <picker mode="date" start="1900-01-01" end="1980-01-01" bindchange="bindPatientBrithday">
+        <view class="picker">
           <!-- 日期: {{date}}   -->
-          <input type="text" placeholder="生日" placeholder-style="color:rgb(173,185,193)" value='{{patientInfo.birthday}}'/> 
-        </view>  
-      </picker>  
-    </view>  
+          <input type="text" placeholder="生日" placeholder-style="color:rgb(173,185,193)" value='{{patientInfo.birthday}}' />
+        </view>
+      </picker>
+    </view>
   </view>
-	<!-- <view class="register_pwd">
+  <!-- <view class="register_pwd">
 		<input type="text" password placeholder="密码" placeholder-style="color:rgb(173,185,193)" bindinput="bindPassword"/>
 	</view> -->
-	<!-- view class="register_text">
+  <!-- view class="register_text">
 		<view>
 			<text>已有账号?</text>
 			<navigator url="../login/login" redirect hover-class="navigator-hover">登 录</navigator>
 		</view>
 	</view -->
-	<button  class="register_btn" hover-class="btn_hover" bindtap="register">注 册</button>
+  <button class="register_btn" hover-class="btn_hover" bindtap="register">注 册</button>
 </view>

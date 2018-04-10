@@ -1,3 +1,5 @@
+var uuid = require('../../utils/uuidtool.js')
+
 //WebIM.conn  实例化的  
 Page({
   data: {
@@ -14,6 +16,9 @@ Page({
         // console.log('>>>>>>>>>' + res.userInfo);
         // 0. 授权获取用户信息
         this.setGlobalData(res);
+        this.wechatLogin();
+        // this.getWechatInfo();
+
         // 1. 后台判断获取用户角色（0.新用户；1.为医生; 2.为患者; 3 为医生患者用户)
         this.getUserRole();
       }
@@ -22,8 +27,66 @@ Page({
 
   setGlobalData(res) {
     getApp().globalData.userInfo = res.userInfo;
-    // console.log(getApp().globalData.userInfo);
     getApp().globalData.encryptedData = res.encryptedData;
+    getApp().globalData.rawData = res.rawData;
+    getApp().globalData.signature = res.signature;
+    getApp().globalData.iv = res.iv;
+
+    // 模拟 unionId
+    // getApp().globalData.unionId = uuid.uuid().replace(new RegExp("-", "g"), "");
+  },
+
+  wechatLogin() {
+    wx.login({
+      success: function (res) {
+        // console.log('wx login res=' + res);
+        console.log('wx login res.code=' + res.code)
+        // if (res.code) {
+        //   wx.request({
+        //     url: getApp().globalData.api.wechatLogin,
+        //     data: {
+        //       "code": res.code
+        //     },
+        //     header: { 'Content-Type': "application/x-www-form-urlencoded" },
+        //     method: 'get',
+        //     success: function (res) {
+        //       console.log('res.data.sessionKey=' + res.data.sessionKey);
+        //       console.log('res.data.unionid=' + res.data.unionid);
+        //       console.log('res.data.openId=' + res.data.openId);
+        //       // getApp().globalData.sessionKey = res.data.sessionKey;
+
+        //     }
+        //   })
+        // } else {
+        //   console.log('登录失败！' + res.errMsg)
+        // }
+      }
+    });
+  },
+
+  getWechatInfo() {
+    
+    // console.log("wxinfo sessionKey=" + getApp().globalData.sessionKey);
+    // console.log("wxinfo signature=" + getApp().globalData.signature);
+    // console.log("wxinfo rawData=" + getApp().globalData.rawData);
+    // console.log("wxinfo encryptedData=" + getApp().globalData.encryptedData);
+    // console.log("wxinfo iv=" + getApp().globalData.iv);
+
+    wx.request({
+      url: getApp().globalData.api.wechatInfo,
+      data: {
+        "sessionKey": getApp().globalData.sessionKey,
+        "signature": getApp().globalData.signature,
+        "rawData": getApp().globalData.rawData,
+        "encryptedData": getApp().globalData.encryptedData,
+        "iv": getApp().globalData.iv
+      },
+      header: { 'Content-Type': "application/x-www-form-urlencoded" },
+      method: 'get',
+      success: function (res) {
+        console.log('res=' + res);
+      }
+    })
   },
 
   getUserRole() {
@@ -45,7 +108,7 @@ Page({
         console.log('>>>>>>>>>>>role=' + role);
         if (role != 0) {// 3. 非新用户，直接登录
           that.jimlogin();
-        } 
+        }
         // 0.新用户，停留在此页面选择角色
       }
     })

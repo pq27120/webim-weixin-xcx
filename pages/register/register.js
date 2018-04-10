@@ -6,8 +6,12 @@ Page({
   data: {
     // username: '',
     // password: '',
+    doctorgrade: ['主任医师（教授/专家）', '副主任医师（副教授）', '主治医师', '住院医师'],
+    doctorgradeindex: 2,
+
     doctorInfo: {},
     patientInfo: {},
+
     registername: '',
     registersex: '',
     isDoctor: ''
@@ -39,7 +43,8 @@ Page({
     // console.log(4);
     // console.log(this.data.doctorInfo.name);
     wx.request({
-      url: getApp().globalData.api.doctorLogin + "?wechatId=" + getApp().globalData.userInfo.nickName,
+      // url: getApp().globalData.api.doctorLogin + "?wechatId=" + getApp().globalData.userInfo.nickName,
+      url: getApp().globalData.api.doctorLogin + "?wechatId=" + getApp().globalData.unionId,
       data: {
         "departmentId": this.data.doctorInfo.department,
         "grade": this.data.doctorInfo.grade,
@@ -65,7 +70,8 @@ Page({
     // console.log('>>>' + getApp().globalData.userInfo.gender);
     // console.log(e.detail.value);
     wx.request({
-      url: getApp().globalData.api.patientLogin + "?wechatId=" + getApp().globalData.userInfo.nickName,
+      // url: getApp().globalData.api.patientLogin + "?wechatId=" + getApp().globalData.userInfo.nickName,
+      url: getApp().globalData.api.patientLogin + "?wechatId=" + getApp().globalData.unionId,
       data: {
         "birthday": this.data.patientInfo.birthday,
         "mobile": this.data.patientInfo.tel,
@@ -84,11 +90,13 @@ Page({
     })
   },
 
-  checkPatient: function (e) {
-    var telregular = /^\d{11}$g/;
+  checkPatient: function () {
+    var telregular = /^\d{11}$/;
     var tel = this.data.patientInfo.tel;
-
-    if (!telregular.test(tel)) {
+    // console.log('tel=' + tel);
+    // console.log('tel regular = ' + telregular.test(tel))
+    // console.log('tel regular = ' + !(telregular.test(tel)))
+    if (!(telregular.test(tel))) {
       wx.showToast({
         title: '手机号码不正确',
         duration: 2000
@@ -115,8 +123,14 @@ Page({
     })
   },
   bindDoctorGrade: function (e) {
+    // console.log(this.data.doctorgradeindex)
+    // this.setData({
+    //   'doctorInfo.grade': e.detail.value
+    // })
+    var index = e.detail.value;
     this.setData({
-      'doctorInfo.grade': e.detail.value
+      'doctorInfo.grade': index,
+      doctorgradeindex: index
     })
   },
 
