@@ -11,16 +11,31 @@ Page({
   },
 
   initUserInfoData() {
+    var that = this;
     wx.getUserInfo({
       success: res => {
         // console.log('>>>>>>>>>' + res.userInfo);
         // 0. 授权获取用户信息
-        this.setGlobalData(res);
-        this.wechatLogin();
+        that.setGlobalData(res);
+        that.wechatLogin();
         // this.getWechatInfo();
 
         // 1. 后台判断获取用户角色（0.新用户；1.为医生; 2.为患者; 3 为医生患者用户)
-        this.getUserRole();
+        that.getUserRole();
+      },
+      fail: function () {
+        console.info("用户拒绝授权");
+        wx.showModal({
+          title: '用户未授权',
+          content: '如需正常使用小程序功能，\n请在微信"发现/小程序"列表中找到并删除本小程序，\n重新打开允许访问用户信息。',
+          showCancel: false,
+          success: function (res) {
+            if (res.confirm) {
+              console.log('用户再次授权');              
+              // that.toAuthorize();
+            }
+          }
+        })
       }
     })
   },
@@ -65,7 +80,7 @@ Page({
   },
 
   getWechatInfo() {
-    
+
     // console.log("wxinfo sessionKey=" + getApp().globalData.sessionKey);
     // console.log("wxinfo signature=" + getApp().globalData.signature);
     // console.log("wxinfo rawData=" + getApp().globalData.rawData);
@@ -90,6 +105,7 @@ Page({
   },
 
   getUserRole() {
+    console.log(0);
     var that = this
     wx.request({
       url: getApp().globalData.api.roleInfo,
@@ -100,7 +116,7 @@ Page({
         // 0 为未注册用户, 1 为医生, 2 为患者, 3 为医生患者用户
         // console.log('remote role=' + res.data.data);
         getApp().globalData.role = res.data.data;
-        // getApp().globalData.role = 0;
+        getApp().globalData.role = 1;
         // 2. 新用户，选角色，选择医生完善医生信息；选择患者完善患者信息
         var role = getApp().globalData.role;
         // var autologin = getApp().globalData.autoLogin
@@ -165,6 +181,38 @@ Page({
       that.login();
     })
   }
+  
+  // toAuthorize() {
+  //   //再授权
+  //   wx.openSetting({
+  //     success: (res) => {
+  //       //因为openSetting会返回用户当前设置，所以通过res.authSetting["scope.userInfo"]来判断用户是否勾选了【用户信息】这一项
+  //       if (res.authSetting["scope.userInfo"]) {
+  //         var that = this
+  //         wx.getUserInfo(function (userInfo) {
+  //           //更新数据
+  //           // that.setData({
+  //             getApp().globalData.userInfo = userInfo;
+  //             console.log('>>1=' + getApp().globalData.userInfo);
+  //             console.log('>>1=' + getApp().globalData.userInfo.nickName);
+  //             // noAuthorized: false
+  //           // })
+  //         })
+  //       } else {
+  //         wx.showModal({
+  //           title: '用户未授权',
+  //           content: '如需正常使用小程序，请点击授权按钮，勾选用户信息并点击确定。',
+  //           showCancel: false,
+  //           success: function (res) {
+  //             if (res.confirm) {
+  //               console.log('用户确定授权')
+  //             }
+  //           }
+  //         })
+  //       }
+  //     }
+  //   })
+  // }
 })
 
 

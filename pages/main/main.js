@@ -39,6 +39,11 @@ Page({
         })       
       }
     }) */
+    console.log('getApp().globalData.userInfo=' + getApp().globalData.userInfo);
+    // 没有授权的话不获取用户列表
+    if (getApp().globalData.userInfo == null){
+      return;
+    }
 
     var that = this
     // 如果是医生，请求患者列表；如果是患者，请求医生列表

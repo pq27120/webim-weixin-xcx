@@ -13,7 +13,6 @@
     "pages/inform/inform",
     "pages/friend_info/friend_info",
     "pages/setting_money/setting_money"
-
   ],
   "window": {
     "backgroundTextStyle": "light",
