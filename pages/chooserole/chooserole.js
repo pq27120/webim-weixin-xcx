@@ -116,7 +116,7 @@ Page({
         // 0 为未注册用户, 1 为医生, 2 为患者, 3 为医生患者用户
         // console.log('remote role=' + res.data.data);
         getApp().globalData.role = res.data.data;
-        // getApp().globalData.role = 1;
+        getApp().globalData.role = 1;
         // 2. 新用户，选角色，选择医生完善医生信息；选择患者完善患者信息
         var role = getApp().globalData.role;
         // var autologin = getApp().globalData.autoLogin
@@ -160,8 +160,11 @@ Page({
 
   jimlogin: function () {
     var that = this
-    console.log(getApp().globalData.loginName);
-    console.log(getApp().globalData.loginPassWord);
+    var userName = wx.getStorageSync('userName');
+    var userPassword = wx.getStorageSync('userPassword');
+
+    // console.log('>>>' + userName);
+    // console.log('>>>' + userPassword);
     getApp().globalData.jim.login({
       'username': getApp().globalData.loginName,
       'password': getApp().globalData.loginPassWord
@@ -171,6 +174,11 @@ Page({
       // console.log('autologin>>>>>>>>>>>>>>>');
       // getApp().globalData.loginName = that.data.name;
       // getApp().globalData.loginPassWord = that.data.psd;
+
+      // 同步方式存储表单数据
+      wx.setStorageSync('userName', objData.userName);
+      wx.setStorageSync('userPassword', objData.userPassword);
+
       if (data.code == 0) {
         // that.getUserRole();
         that.main();
