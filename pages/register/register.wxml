@@ -5,7 +5,7 @@
   <!-- 如果是医生注册，需要填写信息如下 -->
   <view wx:if='{{isDoctor === true}}'>
     <view class="register_user">
-      <input type="text" placeholder="医生姓名(昵称)" value='{{registername}}' disabled='disabled' placeholder-style="color:rgb(173,185,193)" bindinput="bindDoctorName" />
+      <input type="text" placeholder="医生姓名(昵称)" value='{{registername}}' placeholder-style="color:rgb(173,185,193)" bindinput="bindDoctorName" />
     </view>
     <view class="register_user">
       <input type="text" placeholder="所在医院" placeholder-style="color:rgb(173,185,193)" bindinput="bindDoctorHospital" />
