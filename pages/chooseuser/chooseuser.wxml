@@ -1,0 +1,4 @@
+<view class='contact'>
+  <button type="default" bindtap="impatient"> liz </button>
+  <button type="default" bindtap="impatient"> + </button>
+</view>
