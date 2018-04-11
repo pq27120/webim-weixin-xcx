@@ -8,10 +8,20 @@
       <input type="text" placeholder="医生姓名(昵称)" value='{{registername}}' placeholder-style="color:rgb(173,185,193)" bindinput="bindDoctorName" />
     </view>
     <view class="register_user">
-      <input type="text" placeholder="所在医院" placeholder-style="color:rgb(173,185,193)" bindinput="bindDoctorHospital" />
+      <!-- <input type="text" placeholder="所在医院" placeholder-style="color:rgb(173,185,193)" bindinput="bindDoctorHospital" /> -->
+      <picker bindchange="bindDoctorHospital" value="{{hospitallistindex}}" range="{{hospitallist}}" range-key="name">
+         <view class="picker">
+          <input type="text" value='{{hospitallist[hospitallistindex].name}}' placeholder="所在医院" placeholder-style="color:rgb(173,185,193)" />
+        </view> 
+      </picker>
     </view>
     <view class="register_user">
-      <input type="text" placeholder="所在科室" placeholder-style="color:rgb(173,185,193)" bindinput="bindDoctorDept" />
+      <!-- <input type="text" placeholder="所在科室" placeholder-style="color:rgb(173,185,193)" bindinput="bindDoctorDept" /> -->
+      <picker bindchange="bindDoctorDept" value="{{hostpitaldepartlistindex}}" range="{{hostpitaldepartlist}}" range-key="name">
+         <view class="picker">
+          <input type="text" value='{{hostpitaldepartlist[hostpitaldepartlistindex].name}}' placeholder="所在科室" placeholder-style="color:rgb(173,185,193)" />
+        </view> 
+      </picker>
     </view>
     <view class="register_user">
       <picker bindchange="bindDoctorGrade" value="{{doctorgradeindex}}" range="{{doctorgrade}}">

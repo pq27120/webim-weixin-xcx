@@ -9,6 +9,14 @@ Page({
     doctorgrade: ['主任医师（教授/专家）', '副主任医师（副教授）', '主治医师', '住院医师'],
     doctorgradeindex: 2,
 
+    // 医院列表
+    hospitallist: [],
+    hospitallistindex: 0,
+
+    // 医院科室
+    hostpitaldepartlist: [],
+    hostpitaldepartlistindex: 0,
+
     doctorInfo: {},
     patientInfo: {},
 
@@ -23,7 +31,31 @@ Page({
       registersex: (getApp().globalData.userInfo == null) ? '男' : ((getApp().globalData.userInfo.gender == 1) ? '男' : '女')
     });
     // console.log('getApp().globalData.userInfo=' + getApp().globalData.userInfo);
+    var that = this;
+    that.initData();
   },
+
+  initData: function () {
+    var that = this;
+    wx.request({
+      // url: getApp().globalData.api.doctorLogin + "?wechatId=" + getApp().globalData.userInfo.nickName,
+      url: getApp().globalData.api.hospitalList,
+      header: { 'Content-Type': "application/json" },
+      method: 'get',
+      success: function (res) {
+        // console.log(res);
+        // console.log(res.data.data.length);
+        // console.log(res.data.data);
+        // console.log(res.data.data[0]);
+        // console.log(res.data.data[0].name);
+        that.setData({
+          hospitallist: res.data.data
+        })
+        // console.log('>>>' + that.data.hospitallist[0].name);
+      }
+    })
+  },
+
   register: function () {
     // console.log('doctor=' + this.data.doctorInfo.name);
     // console.log('patient=' + this.data.patientInfo.name);
@@ -31,16 +63,17 @@ Page({
       this.registerDoctor();
     } else {
       // if (this.checkPatient()) {
-        this.registerPatient();
+      this.registerPatient();
       // }
     }
   },
 
   registerDoctor: function () {
     // console.log(this.data.registername);
-    console.log(this.data.doctorInfo.department);
+    // console.log('department...' + this.data.doctorInfo.department);
     // console.log(this.data.doctorInfo.grade);
-    console.log(this.data.doctorInfo.hospital);
+    // console.log('hospital...' + this.data.doctorInfo.hospital);
+    // return;
     // console.log(4);
     // console.log(this.data.doctorInfo.name);
     var name = this.data.registername;
@@ -55,7 +88,7 @@ Page({
     }
     // console('name=' + name);
 
-    if (this.data.doctorInfo.hospital == undefined){
+    if (this.data.doctorInfo.hospital == undefined) {
       wx.showToast({
         title: '请选择所在医院',
         duration: 2000
@@ -63,7 +96,7 @@ Page({
       return;
     }
 
-    if (this.data.doctorInfo.department == undefined){
+    if (this.data.doctorInfo.department == undefined) {
       wx.showToast({
         title: '请选择所在科室',
         duration: 2000
@@ -112,18 +145,18 @@ Page({
       return;
     }
 
-    if (!this.checkPatient()){
+    if (!this.checkPatient()) {
       return;
     }
 
-    if (this.data.patientInfo.birthday == undefined){
+    if (this.data.patientInfo.birthday == undefined) {
       wx.showToast({
         title: '请选择患者生日',
         duration: 2000
       })
       return;
     }
-    
+
     wx.request({
       // url: getApp().globalData.api.patientLogin + "?wechatId=" + getApp().globalData.userInfo.nickName,
       url: getApp().globalData.api.patientLogin + "?wechatId=" + getApp().globalData.openid,
@@ -177,13 +210,47 @@ Page({
     })
   },
   bindDoctorHospital: function (e) {
-    this.setData({
-      'doctorInfo.hospital': e.detail.value
+    var index = e.detail.value;
+    var that = this;
+    var id = that.data.hospitallist[index].id;
+    // console.log(this.data.hospitallist);
+    // console.log(this.data.hospitallist[index]);
+    // console.log(this.data.hospitallist[index].id);
+    wx.request({
+      url: getApp().globalData.api.hospitalDepartList,
+      header: { 'Content-Type': "application/json" },
+      data: {
+        hospitalId: id
+      },
+      method: 'get',
+      success: function (res) {
+        // console.log(res);
+        // console.log(res.data.data.length);
+        // console.log(res.data.data);
+        // console.log(res.data.data[0]);
+        // console.log(res.data.data[0].name);
+        that.setData({
+          //   hospitallist: res.data.data
+          hostpitaldepartlist: res.data.data
+        })
+        // console.log('>>>' + that.data.hospitallist[0].name);
+      }
     })
+
+    this.setData({
+      'doctorInfo.hospital': id,
+      hospitallistindex: index
+    })
+
+
   },
   bindDoctorDept: function (e) {
+    var index = e.detail.value;
+    var that = this
+    var id = that.data.hostpitaldepartlist[index].id;
     this.setData({
-      'doctorInfo.department': e.detail.value
+      'doctorInfo.department': id,
+      hostpitaldepartlistindex: index
     })
   },
   bindDoctorGrade: function (e) {
@@ -202,7 +269,7 @@ Page({
   bindPatientName: function (e) {
     this.setData({
       'patientInfo.name': e.detail.value,
-      registername : e.detail.value
+      registername: e.detail.value
     })
     // console.log(this.data.patientInfo)
   },
@@ -210,7 +277,7 @@ Page({
   bindPatientSex: function (e) {
     this.setData({
       'patientInfo.sex': e.detail.value,
-      registersex : e.detail.value == '男' ? e.detail.value : '女'
+      registersex: e.detail.value == '男' ? e.detail.value : '女'
     })
 
   },

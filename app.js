@@ -377,7 +377,11 @@ App({
       // 微信用户信息
       wechatInfo: 'http://120.78.132.250:8082/fk_api/wechat/info',
       // 微信用户登录
-      wechatLogin: 'http://120.78.132.250:8082/fk_api/wechat/login'
+      wechatLogin: 'http://120.78.132.250:8082/fk_api/wechat/login',
+      // 医院列表
+      hospitalList: 'http://120.78.132.250:8082/fk_api/hospital/hospitalList',
+      // 医院科室列表
+      hospitalDepartList: 'http://120.78.132.250:8082/fk_api/hospital/hospitalDepartmentList'
     }
   }
 })
