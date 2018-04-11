@@ -56,6 +56,7 @@ Page({
           //wx.closeSocket()
           wx.redirectTo({
             // url: '../login/login'
+            // 退到账号切换的界面
             url: '../chooserole/chooserole'
           })
         }

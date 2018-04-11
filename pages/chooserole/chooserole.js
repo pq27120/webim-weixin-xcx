@@ -68,7 +68,7 @@ Page({
               // console.log(res);
               // console.log('res.data.sessionKey=' + res.data.data.sessionKey);
               // console.log('res.data.unionid=' + res.data.data.unionid);
-              // console.log('res.data.openid=' + res.data.data.openid);
+              console.log('res.data.openid=' + res.data.data.openid);
               getApp().globalData.sessionKey = res.data.data.sessionKey;
               getApp().globalData.unionid = res.data.data.unionid;
               getApp().globalData.openid = res.data.data.openid;
@@ -162,40 +162,19 @@ Page({
 
   jimlogin: function () {
     var that = this
-    // var userName, userPassword;
 
-    // wx.getStorage({
-    //   key: 'username',
-    //   success: function (res) {
-    //     console.log('>>>>' + res.data)
-    //     userName = res.data;
-    //   }
-    // })
+    var role = getApp().globalData.role;
 
-    // wx.getStorage({
-    //   key: 'password',
-    //   success: function (res) {
-    //     console.log('>>>>' + res.data)
-    //     userPassword = res.data;
-    //   }
-    // })
+    // 1 为医生, 2 为患者
+    var name = (role == 1) ? ('doc' + getApp().globalData.openid) : ('pat' + getApp().globalData.openid);
 
-    // console.log('>>>' + userName);
-    // console.log('>>>' + userPassword);
     getApp().globalData.jim.login({
-      'username': getApp().globalData.loginName,
-      'password': getApp().globalData.loginPassWord
+      // 'username': getApp().globalData.loginName,
+      // 'password': getApp().globalData.loginPassWord
+      'username': name,
+      'password': name
     }).onSuccess(function (data) {
-      //data.code 返回码
-      //data.message 描述
-      // console.log('autologin>>>>>>>>>>>>>>>');
-      // getApp().globalData.loginName = that.data.name;
-      // getApp().globalData.loginPassWord = that.data.psd;
-
-      // 同步方式存储表单数据
-      // wx.setStorageSync('userName', objData.userName);
-      // wx.setStorageSync('userPassword', objData.userPassword);
-
+      
       if (data.code == 0) {
         // that.getUserRole();
         that.main();

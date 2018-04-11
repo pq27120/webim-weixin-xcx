@@ -73,7 +73,7 @@ Page({
     var name = this.data.registername;
     wx.request({
       // url: getApp().globalData.api.doctorLogin + "?wechatId=" + getApp().globalData.userInfo.nickName,
-      url: getApp().globalData.api.doctorLogin + "?wechatId=" + getApp().globalData.unionId,
+      url: getApp().globalData.api.doctorLogin + "?wechatId=" + getApp().globalData.openid,
       data: {
         "departmentId": this.data.doctorInfo.department,
         "grade": this.data.doctorInfo.grade,
@@ -126,7 +126,7 @@ Page({
     
     wx.request({
       // url: getApp().globalData.api.patientLogin + "?wechatId=" + getApp().globalData.userInfo.nickName,
-      url: getApp().globalData.api.patientLogin + "?wechatId=" + getApp().globalData.unionId,
+      url: getApp().globalData.api.patientLogin + "?wechatId=" + getApp().globalData.openid,
       data: {
         "birthday": this.data.patientInfo.birthday,
         "mobile": this.data.patientInfo.tel,
