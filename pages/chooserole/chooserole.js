@@ -31,7 +31,7 @@ Page({
           showCancel: false,
           success: function (res) {
             if (res.confirm) {
-              console.log('用户再次授权');              
+              console.log('用户再次授权');
               // that.toAuthorize();
             }
           }
@@ -65,10 +65,10 @@ Page({
             header: { 'Content-Type': "application/x-www-form-urlencoded" },
             method: 'get',
             success: function (res) {
-              console.log(res);
-              console.log('res.data.sessionKey=' + res.data.data.sessionKey);
-              console.log('res.data.unionid=' + res.data.data.unionid);
-              console.log('res.data.openid=' + res.data.data.openid);
+              // console.log(res);
+              // console.log('res.data.sessionKey=' + res.data.data.sessionKey);
+              // console.log('res.data.unionid=' + res.data.data.unionid);
+              // console.log('res.data.openid=' + res.data.data.openid);
               getApp().globalData.sessionKey = res.data.data.sessionKey;
               getApp().globalData.unionid = res.data.data.unionid;
               getApp().globalData.openid = res.data.data.openid;
@@ -162,8 +162,23 @@ Page({
 
   jimlogin: function () {
     var that = this
-    // var userName = wx.getStorageSync('userName');
-    // var userPassword = wx.getStorageSync('userPassword');
+    // var userName, userPassword;
+
+    // wx.getStorage({
+    //   key: 'username',
+    //   success: function (res) {
+    //     console.log('>>>>' + res.data)
+    //     userName = res.data;
+    //   }
+    // })
+
+    // wx.getStorage({
+    //   key: 'password',
+    //   success: function (res) {
+    //     console.log('>>>>' + res.data)
+    //     userPassword = res.data;
+    //   }
+    // })
 
     // console.log('>>>' + userName);
     // console.log('>>>' + userPassword);
@@ -191,7 +206,7 @@ Page({
       that.login();
     })
   }
-  
+
   // toAuthorize() {
   //   //再授权
   //   wx.openSetting({

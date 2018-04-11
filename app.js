@@ -358,7 +358,7 @@ App({
     appkey: '5da10dc227e8d4125971ed9b',
     loginName: '',
     loginPassWord: '',
-    // autoLogin: true,
+    autoLogin: true,
     role: null,
     name: null,
     api: {

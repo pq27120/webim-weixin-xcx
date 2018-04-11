@@ -48,9 +48,27 @@ Page({
         // console.log(that.data.myrole);
         getApp().globalData.loginName = that.data.name;
         getApp().globalData.loginPassWord = that.data.psd;
-
+        // console.log('login autologin>>>>>>>>>>>>>>>' + getApp().globalData.autoLogin);
         // console.log('login.name>>>' + getApp().globalData.loginName);
         // console.log('login.password>>>' + getApp().globalData.loginPassWord);
+        // if (getApp().globalData.autoLogin) { // 自动登录打开
+        //   wx.setStorage({
+        //     key: 'username',
+        //     data: that.data.name
+        //   })
+
+        //   wx.setStorage({
+        //     key: 'password',
+        //     data: that.data.name
+        //   })
+        // }
+
+        // wx.getStorage({
+        //   key: 'userName',
+        //   success: function (res) {
+        //     console.log('>>>>' + res.data)
+        //   }
+        // })
 
         if (data.code == 0) {
           that.getUserRole();
