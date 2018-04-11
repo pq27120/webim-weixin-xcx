@@ -19,9 +19,6 @@ Page({
         that.setGlobalData(res);
         that.wechatLogin();
         // this.getWechatInfo();
-
-        // 1. 后台判断获取用户角色（0.新用户；1.为医生; 2.为患者; 3 为医生患者用户)
-        that.getUserRole();
       },
       fail: function () {
         console.info("用户拒绝授权");
@@ -52,6 +49,7 @@ Page({
   },
 
   wechatLogin() {
+    var that = this;
     wx.login({
       success: function (res) {
         // console.log('wx login res=' + res);
@@ -73,6 +71,9 @@ Page({
               getApp().globalData.unionid = res.data.data.unionid;
               getApp().globalData.openid = res.data.data.openid;
 
+
+              // 1. 后台判断获取用户角色（0.新用户；1.为医生; 2.为患者; 3 为医生患者用户)
+              that.getUserRole();
             }
           })
         } else {
@@ -174,7 +175,7 @@ Page({
       'username': name,
       'password': name
     }).onSuccess(function (data) {
-      
+
       if (data.code == 0) {
         // that.getUserRole();
         that.main();
