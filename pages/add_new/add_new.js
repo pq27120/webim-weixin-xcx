@@ -1,7 +1,3 @@
-var strophe = require('../../utils/strophe.js')
-var WebIM = require('../../utils/WebIM.js')
-var WebIM = WebIM.default
-
 //WebIM.conn  实例化的  
 Page({
   data: {
@@ -12,17 +8,8 @@ Page({
       friend_name: e.detail.value
     })
   },
-  onShow: function () {
-    //console.log(getCurrentPages())
-  },
-  sendMsg: function () {
-    wx.showToast({
-      title: '消息发送成功！',
-      duration: 1500
-    })
-  },
   // 允许从相机和相册扫码
-  san: function () {
+  scanfriend() {
     console.log('scan')
     wx.scanCode({
       onlyFromCamera: true,
@@ -34,42 +21,23 @@ Page({
       }
     })
   },
-  add_friend: function () {
+  addfriend() {
     var that = this
     if (that.data.friend_name == '') {
       wx.showToast({
         title: '请输入好友账号！',
         duration: 1500
       })
-      return false
+      return
     }
     if (that.data.friend_name == getApp().globalData.name) {
       wx.showToast({
         title: '您不能添加自己为好友!',
         duration: 1500
       })
-      return false
-    }
-    else {
-      // getApp().globalData.jim.addFriend({
-      //   'target_name': that.data.friend_name,
-      //   'why': 'why'
-      // }).onSuccess(function (data) {
-      //   console.log(data);
-      //   //data.code 返回码
-      //   //data.message 描述
-      // }).onFail(function (data) {
-      //   // 同上
-      // });
-      // WebIM.conn.subscribe({
-      //     to: that.data.friend_name
-      //     // message: "hello!"                   
-      // })
+      return
+    } else {
 
-      // wx.showToast({
-      // 	title: '消息发送成功！',
-      // 	duration: 1500
-      // })
       var friendnames = [];
       friendnames.push(that.data.friend_name);
       console.log('>>>>>>>>>>>>>>' + friendnames);
