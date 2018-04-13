@@ -68,6 +68,12 @@ Page({
     }
   },
 
+  backchooserole: function () { 
+    wx.redirectTo({
+      url: '../chooserole/chooserole'
+    })
+  },
+
   registerDoctor: function () {
     // console.log(this.data.registername);
     // console.log('department...' + this.data.doctorInfo.department);

@@ -63,5 +63,6 @@
 			<navigator url="../login/login" redirect hover-class="navigator-hover">登 录</navigator>
 		</view>
 	</view -->
-  <button class="register_btn" hover-class="btn_hover" bindtap="register">注 册</button>
+  <button class='register_btn2' hover-class="btn_hover" bindtap="backchooserole">上一步</button>
+  <button class='register_btn2 register_right' hover-class="btn_hover" bindtap="register">注 册</button>
 </view>

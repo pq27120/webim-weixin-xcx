@@ -68,6 +68,21 @@
 	color: rgb(255,255,255);
 	background-color: #1aa0e5;
 }
+.register_btn2 {
+	width: 50%;
+	height: 50px;
+	position: fixed;
+	bottom: 0;
+	/* right: 0; */
+	border-radius: 0;
+	line-height: 50px;
+	color: rgb(255,255,255);
+	background-color: #1aa0e5;
+}
+.register_right {
+  right: 0;
+}
+
 .btn_hover {
 	background-color: #4F94CD;
 }
