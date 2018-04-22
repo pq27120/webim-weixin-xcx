@@ -9,9 +9,9 @@ Page({
     show_mask: false,
     myName: '',
     // myrole: '',
-    member: [],
-    docmember: [],
-    patmember: []
+    member: []
+    // docmember: [],
+    // patmember: []
     // isDoctor:false
   },
   onLoad: function (option) {
