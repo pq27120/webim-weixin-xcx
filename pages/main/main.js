@@ -9,7 +9,9 @@ Page({
     show_mask: false,
     myName: '',
     // myrole: '',
-    member: []
+    member: [],
+    docmember: [],
+    patmember: []
     // isDoctor:false
   },
   onLoad: function (option) {
@@ -41,9 +43,11 @@ Page({
     }) */
     console.log('getApp().globalData.userInfo=' + getApp().globalData.userInfo);
     // 没有授权的话不获取用户列表
-    if (getApp().globalData.userInfo == null){
+    if (getApp().globalData.userInfo == null) {
       return;
     }
+
+    console.log('role=' + (getApp().globalData.role) + ', get url = ' + ((getApp().globalData.role === 1) ? getApp().globalData.api.patientFriendList : getApp().globalData.api.doctorFriendList));
 
     var that = this
     // 如果是医生，请求患者列表；如果是患者，请求医生列表
@@ -58,9 +62,32 @@ Page({
         // getApp().globalData.role = (res.data.data === 1) ? 'doctor' : 'patient'
         var member = []
         member = res.data.data
+        console.log(member);
         if (member) {
+
+          // getApp().globalData.role === 1
+          // 医生就组装患者列表，患者就组装医生列表
+          var res = [];
+
+          if (getApp().globalData.role === 1) {
+            for (var i = 0; i < member.length; i++) {
+              for (var j = 0; j < res.length; j++) {
+                if (member[i].doctorId === res[j].doctorId) {
+                  break;
+                }
+              }
+              // 如果array[i]是唯一的，那么执行完循环，j等于resLen
+              if (j === res.length) {
+                res.push(member[i])
+              }
+            }
+          }
+
+          console.log('res= ' + res);
+
           that.setData({
-            member: member
+            // member: member
+            member: res
           })
           wx.setStorage({
             key: 'member',

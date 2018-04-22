@@ -118,7 +118,7 @@ Page({
         // 0 为未注册用户, 1 为医生, 2 为患者, 3 为医生患者用户
         // console.log('remote role=' + res.data.data);
         getApp().globalData.role = res.data.data;
-        getApp().globalData.role = 0;
+        // getApp().globalData.role = 0;
         // 2. 新用户，选角色，选择医生完善医生信息；选择患者完善患者信息
         var role = getApp().globalData.role;
         // var autologin = getApp().globalData.autoLogin
