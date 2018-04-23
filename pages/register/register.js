@@ -115,7 +115,7 @@ Page({
       url: getApp().globalData.api.doctorLogin + "?wechatId=" + getApp().globalData.openid,
       data: {
         "departmentId": this.data.doctorInfo.department,
-        "grade": this.data.doctorInfo.grade,
+        "grade": (this.data.doctorInfo.grade == null) ? 0 : this.data.doctorInfo.grade ,
         "hospitalId": this.data.doctorInfo.hospital,
         "monthPrice": 0,
         // "name": this.data.doctorInfo.name

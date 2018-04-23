@@ -9,16 +9,16 @@ Page({
     show_mask: false,
     myName: '',
     // myrole: '',
-    member: []
+    member: [],
     // docmember: [],
     // patmember: []
-    // isDoctor:false
+    isDoctor:false
   },
   onLoad: function (option) {
     this.setData({
-      myName: getApp().globalData.name
+      myName: getApp().globalData.name,
       // myrole: option.role
-      // isDoctor: option.doctor
+      isDoctor: (getApp().globalData.role == 1)
     })
     //console.log("wjy")
     //var that = this
@@ -47,12 +47,12 @@ Page({
       return;
     }
 
-    console.log('role=' + (getApp().globalData.role) + ', get url = ' + ((getApp().globalData.role === 1) ? getApp().globalData.api.patientFriendList : getApp().globalData.api.doctorFriendList));
+    console.log('role=' + (getApp().globalData.role) + ', get url = ' + (getApp().globalData.role == 1) ? getApp().globalData.api.doctorFriendList : getApp().globalData.api.patientFriendList)
 
     var that = this
     // 如果是医生，请求患者列表；如果是患者，请求医生列表
     wx.request({
-      url: (getApp().globalData.role === 1) ? getApp().globalData.api.patientFriendList : getApp().globalData.api.doctorFriendList,
+      url: (getApp().globalData.role == 1) ? getApp().globalData.api.doctorFriendList : getApp().globalData.api.patientFriendList,
       data: { "wechatId": getApp().globalData.openid },
       header: { 'Content-Type': "application/x-www-form-urlencoded" },
       method: 'post',
@@ -69,7 +69,21 @@ Page({
           // 医生就组装患者列表，患者就组装医生列表
           var res = [];
 
-          if (getApp().globalData.role === 1) {
+          if (getApp().globalData.role == 1) {
+            console.log('医生')
+            for (var i = 0; i < member.length; i++) {
+              for (var j = 0; j < res.length; j++) {
+                if (member[i].patientId === res[j].patientId) {
+                  break;
+                }
+              }
+              // 如果array[i]是唯一的，那么执行完循环，j等于resLen
+              if (j === res.length) {
+                res.push(member[i])
+              }
+            }
+          } else {
+            console.log('患者')
             for (var i = 0; i < member.length; i++) {
               for (var j = 0; j < res.length; j++) {
                 if (member[i].doctorId === res[j].doctorId) {
