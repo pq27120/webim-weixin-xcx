@@ -47,7 +47,11 @@ Page({
     // console.log('>>>>>>>>>>' + myName);
     var options = JSON.parse(options.username)
     // var num = wx.getStorageSync(options.your + myName).length - 1
+    wx.setNavigationBarTitle({
+      title: options.your
+    })
     var num = wx.getStorageSync(options.your).length;
+
     if (num > 0) {
       setTimeout(function () {
         that.setData({
@@ -58,9 +62,10 @@ Page({
     }
     this.setData({
       yourname: options.your,
-      myName: myName,
+      // myName: myName,
       inputMessage: '',
-      chatMsg: wx.getStorageSync(options.your + myName) || []
+      // chatMsg: wx.getStorageSync(options.your + myName) || []
+      chatMsg: wx.getStorageSync(options.your) || []
     })
     console.log(that.data.chatMsg)
     wx.setNavigationBarTitle({
