@@ -6,7 +6,7 @@
   <!-- <image src="../../images/add.png" bindtap="add_new"></image>  -->
 </view>
 <!-- <view class="search_input" wx:if="{{ search_friend }}"> -->
-  <!-- <view>
+<!-- <view>
     <icon type="search" size="13"></icon>
     <input placeholder="搜索" placeholder-style="color:#CFCFCF;line-height:20px;font-size:12px;" auto-focus></input>
   </view>
@@ -33,7 +33,12 @@
     <view wx:for="{{ member }}" class="numbers" wx:key="word">
       <view class="nbr_header">{{ item.word }}</view>
       <view class="info" bindtap="into_info">
-        <image src="../../images/number.png" data-username="{{ item.patientName }}"></image>
+        <block wx:if="{{item.patientUrl != 0 }}">
+          <image src="{{item.patientUrl}}" data-username="{{ item.patientName }}"></image>
+        </block>
+        <block wx:else>
+          <image src="../../images/number.png" data-username="{{ item.patientName }}"></image>
+        </block>
       </view>
       <view class="nbr_body" data-username="{{ item.patientName }}" bindtap="into_room">
         <text data-username="{{ item.patientName }}">{{ item.patientName }}</text>
@@ -48,7 +53,12 @@
     <view wx:for="{{ member }}" class="numbers" wx:key="word">
       <view class="nbr_header">{{ item.word }}</view>
       <view class="info" bindtap="into_info">
-        <image src="../../images/number.png" data-username="{{ item.doctorName }}"></image>
+        <block wx:if="{{item.doctorUrl != 0 }}">
+          <image src="{{item.doctorUrl}}" data-username="{{ item.doctorName }}"></image>
+        </block>
+        <block wx:else>
+          <image src="../../images/number.png" data-username="{{ item.doctorName }}"></image>
+        </block>
       </view>
       <view class="nbr_body" data-username="{{ item.doctorName }}" bindtap="into_room">
         <text data-username="{{ item.doctorName }}">{{ item.doctorName }}</text>

@@ -2,6 +2,7 @@
   <image src="../../images/logo.png"></image>
 </view>
 <view class='contact'>
-  <button class='role_btn2' bindtap="imdoctor"> 我是医生</button>
+  <!-- <button class='role_btn2' open-type="getUserInfo"> 获取用户信息</button> -->
+   <button class='role_btn2' bindtap="imdoctor"> 我是医生</button> 
   <button class='role_btn' type='primary' bindtap="impatient"> 我是患者 </button>
 </view>

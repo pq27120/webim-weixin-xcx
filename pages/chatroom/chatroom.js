@@ -60,6 +60,7 @@ Page({
         })
       }, 10)
     }
+    console.log('wx.getStorageSync(options.your)=' + wx.getStorageSync(options.your));
     this.setData({
       yourname: options.your,
       // myName: myName,
@@ -335,7 +336,7 @@ Page({
         mid: msg.id
       }
       that.data.chatMsg.push(msgData)
-      // console.log(that.data.chatMsg)
+      console.log("that.data.yourname.myName= " + that.data.yourname + ';' + myName)
 
       wx.setStorage({
         key: that.data.yourname + myName,

@@ -118,6 +118,7 @@ Page({
         "grade": (this.data.doctorInfo.grade == null) ? 0 : this.data.doctorInfo.grade ,
         "hospitalId": this.data.doctorInfo.hospital,
         "monthPrice": 0,
+        "imageUrl": getApp().globalData.userInfo.avatarUrl,
         // "name": this.data.doctorInfo.name
         "name": name
       },
@@ -171,6 +172,7 @@ Page({
         "mobile": this.data.patientInfo.tel,
         // "name": this.data.patientInfo.name,
         // "name": getApp().globalData.userInfo.nickName,
+        "imageUrl": getApp().globalData.userInfo.avatarUrl,
         "name": name,
         "sex": sex
         // "sex": (this.data.patientInfo.sex == '男') ? '1' : '0'

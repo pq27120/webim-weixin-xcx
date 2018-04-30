@@ -8,7 +8,8 @@ Page({
   },
   onShow: function () {
     var that = this
-    var member = wx.getStorageSync('member')
+    var member = wx.getStorageSync('member');
+    console.log("member=" + member[0].id + ";" + member[0].doctorId + ";" + member[0].doctorName);
     var myName = wx.getStorageSync('myUsername')
     var array = []
     if (member) {

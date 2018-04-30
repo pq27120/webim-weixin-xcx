@@ -12,7 +12,7 @@ Page({
     member: [],
     // docmember: [],
     // patmember: []
-    isDoctor:false
+    isDoctor: false
   },
   onLoad: function (option) {
     this.setData({
@@ -79,6 +79,10 @@ Page({
               }
               // 如果array[i]是唯一的，那么执行完循环，j等于resLen
               if (j === res.length) {
+                // console.log("member[i].doctorUrl=" + (member[i].doctorUrl != null)) ;
+                if ((member[i].patientUrl == null)) {
+                  member[i].patientUrl = 0;
+                }
                 res.push(member[i])
               }
             }
@@ -92,12 +96,15 @@ Page({
               }
               // 如果array[i]是唯一的，那么执行完循环，j等于resLen
               if (j === res.length) {
+                if ((member[i].doctorUrl == null)) {
+                  member[i].doctorUrl = 0;
+                }
                 res.push(member[i])
               }
             }
           }
 
-          console.log('res= ' + res);
+          // console.log('res= ' + res[0].patientUrl);
 
           that.setData({
             // member: member
