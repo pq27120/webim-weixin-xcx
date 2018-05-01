@@ -9,17 +9,29 @@ Page({
   onShow: function () {
     var that = this
     var member = wx.getStorageSync('member');
-    console.log("member=" + member[0].id + ";" + member[0].doctorId + ";" + member[0].doctorName);
+    // console.log("member=" + member[0].id + ";" + member[0].doctorId + ";" + member[0].doctorName);
     var myName = wx.getStorageSync('myUsername')
     var array = []
     if (member) {
       for (var i = 0; i < member.length; i++) {
-        if (wx.getStorageSync(member[i].name + myName) != '') {
-          array.push(wx.getStorageSync(member[i].name + myName)[wx.getStorageSync(member[i].name + myName).length - 1])
+        // if (wx.getStorageSync(member[i].name + myName) != '') {
+        //   array.push(wx.getStorageSync(member[i].name + myName)[wx.getStorageSync(member[i].name + myName).length - 1])
+        // }
+        // wx.getStorageSync((((getApp().globalData.role == 1) ? member[i].doctorName : member[i].patientName)) + ',' + getApp().globalData.openid);
+        // console.log(i + '>>>' + (((getApp().globalData.role == 1) ? member[i].patientName : member[i].doctorName) + ',' + getApp().globalData.openid));
+        // console.log(i + '>>>' + wx.getStorageSync((((getApp().globalData.role == 1) ? member[i].patientName : member[i].doctorName) + ',' + getApp().globalData.openid)));
+        // console.log('1>>>' + member[i].doctorName);
+        // console.log('2>>>' + member[i].patientName);
+        // console.log('3>>>' + getApp().globalData.openid);
+        // console.log('4>>>' + wx.getStorageSync(((getApp().globalData.role == 1) ? member[i].doctorName : member[i].patientName) + ',' + getApp().globalData.openid));
+        if (wx.getStorageSync(((getApp().globalData.role == 1) ? member[i].patientName : member[i].doctorName) + ',' + getApp().globalData.openid) != '') {
+          var msgdata = wx.getStorageSync(((getApp().globalData.role == 1) ? member[i].patientName : member[i].doctorName) + ',' + getApp().globalData.openid)[wx.getStorageSync(((getApp().globalData.role == 1) ? member[i].patientName : member[i].doctorName) + ',' + getApp().globalData.openid).length - 1];
+          msgdata.imageurl = ((getApp().globalData.role == 1) ? member[i].patientUrl : member[i].doctorUrl);
+          array.push(msgdata)
         }
       }
     }
-    //console.log(array，'1')
+    // console.log(array);
     this.setData({
       arr: array
     })

@@ -50,25 +50,30 @@ Page({
     wx.setNavigationBarTitle({
       title: options.your
     })
-    var num = wx.getStorageSync(options.your).length;
-
+    // var num = wx.getStorageSync(options.your).length;
+    var num = wx.getStorageSync(options.your + ',' + getApp().globalData.openid).length;
+    // console.log('name + openid = ' + options.your + ',' + getApp().globalData.openid)
+    // console.log('num='+ num);
     if (num > 0) {
       setTimeout(function () {
         that.setData({
           // toView: wx.getStorageSync(options.your + myName)[num].mid
-          toView: wx.getStorageSync(options.your)[num].mid
+          // toView: wx.getStorageSync(options.your)[num].mid
+          toView: wx.getStorageSync(options.your + ',' + getApp().globalData.openid)[num].mid
         })
       }, 10)
     }
-    console.log('wx.getStorageSync(options.your)=' + wx.getStorageSync(options.your));
+    // console.log('wx.getStorageSync(options.your)=' + wx.getStorageSync(options.your));
+    // console.log('wx.getStorageSync(options.your)=' + wx.getStorageSync(options.your + ',' + getApp().globalData.openid));
     this.setData({
       yourname: options.your,
       // myName: myName,
       inputMessage: '',
       // chatMsg: wx.getStorageSync(options.your + myName) || []
-      chatMsg: wx.getStorageSync(options.your) || []
+      // chatMsg: wx.getStorageSync(options.your) || []
+      chatMsg: wx.getStorageSync(options.your + ',' + getApp().globalData.openid) || []
     })
-    console.log(that.data.chatMsg)
+    // console.log(that.data.chatMsg)
     wx.setNavigationBarTitle({
       title: that.data.yourname
     })
@@ -276,7 +281,8 @@ Page({
         // 存储到本地消息
         var myName = wx.getStorageSync('myUsername')
         wx.setStorage({
-          key: that.data.yourname + myName,
+          // key: that.data.yourname + myName,
+          key: that.data.yourname + ',' + getApp().globalData.openid,
           data: that.data.chatMsg,
           success: function () {
             //console.log('success', that.data)
@@ -336,10 +342,11 @@ Page({
         mid: msg.id
       }
       that.data.chatMsg.push(msgData)
-      console.log("that.data.yourname.myName= " + that.data.yourname + ';' + myName)
+      console.log("that.data.yourname.myName= " + that.data.yourname + ',' + getApp().globalData.openid)
 
       wx.setStorage({
-        key: that.data.yourname + myName,
+        // key: that.data.yourname + myName,
+        key: that.data.yourname + ',' + getApp().globalData.openid,
         data: that.data.chatMsg,
         success: function () {
           //console.log('success', that.data)
@@ -458,7 +465,8 @@ Page({
       //console.log(msgData, that.data.chatMsg, that.data)
       that.data.chatMsg.push(msgData)
       wx.setStorage({
-        key: that.data.yourname + myName,
+        // key: that.data.yourname + myName,
+        key: that.data.yourname + ',' + getApp().globalData.openid,
         data: that.data.chatMsg,
         success: function () {
           if (type == 'audio')
@@ -689,7 +697,8 @@ Page({
       that.data.chatMsg.push(msgData)
       //console.log(that.data.chatMsg)
       wx.setStorage({
-        key: that.data.yourname + myName,
+        // key: that.data.yourname + myName,
+        key: that.data.yourname + ',' + getApp().globalData.openid,
         data: that.data.chatMsg,
         success: function () {
           //console.log('success', that.data)
@@ -732,7 +741,8 @@ Page({
       that.data.chatMsg.push(msgData)
       //console.log(that.data.chatMsg)
       wx.setStorage({
-        key: that.data.yourname + myName,
+        // key: that.data.yourname + myName,
+        key: that.data.yourname + ',' + getApp().globalData.openid,
         data: that.data.chatMsg,
         success: function () {
           //console.log('success', that.data)
@@ -862,7 +872,8 @@ Page({
                 //console.log(that.data.chatMsg)
                 var myName = wx.getStorageSync('myUsername')
                 wx.setStorage({
-                  key: that.data.yourname + myName,
+                  // key: that.data.yourname + myName,
+                  key: that.data.yourname + ',' + getApp().globalData.openid,
                   data: that.data.chatMsg,
                   success: function () {
                     //console.log('success', that.data)

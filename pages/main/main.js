@@ -41,13 +41,13 @@ Page({
         })       
       }
     }) */
-    console.log('getApp().globalData.userInfo=' + getApp().globalData.userInfo);
+    // console.log('getApp().globalData.userInfo=' + getApp().globalData.userInfo);
     // 没有授权的话不获取用户列表
     if (getApp().globalData.userInfo == null) {
       return;
     }
 
-    console.log('role=' + (getApp().globalData.role) + ', get url = ' + (getApp().globalData.role == 1) ? getApp().globalData.api.doctorFriendList : getApp().globalData.api.patientFriendList)
+    // console.log('role=' + (getApp().globalData.role) + ', get url = ' + (getApp().globalData.role == 1) ? getApp().globalData.api.doctorFriendList : getApp().globalData.api.patientFriendList)
 
     var that = this
     // 如果是医生，请求患者列表；如果是患者，请求医生列表
@@ -62,7 +62,7 @@ Page({
         // getApp().globalData.role = (res.data.data === 1) ? 'doctor' : 'patient'
         var member = []
         member = res.data.data
-        console.log(member);
+        // console.log(member);
         if (member) {
 
           // getApp().globalData.role === 1
@@ -70,7 +70,7 @@ Page({
           var res = [];
 
           if (getApp().globalData.role == 1) {
-            console.log('医生')
+            // console.log('医生')
             for (var i = 0; i < member.length; i++) {
               for (var j = 0; j < res.length; j++) {
                 if (member[i].patientId === res[j].patientId) {
@@ -87,7 +87,7 @@ Page({
               }
             }
           } else {
-            console.log('患者')
+            // console.log('患者')
             for (var i = 0; i < member.length; i++) {
               for (var j = 0; j < res.length; j++) {
                 if (member[i].doctorId === res[j].doctorId) {

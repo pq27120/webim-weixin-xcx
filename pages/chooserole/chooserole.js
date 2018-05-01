@@ -54,7 +54,7 @@ Page({
     wx.login({
       success: function (res) {
         // console.log('wx login res=' + res);
-        console.log('wx login res.code=' + res.code)
+        // console.log('wx login res.code=' + res.code)
         if (res.code) {
           wx.request({
             url: getApp().globalData.api.wechatLogin,
@@ -67,7 +67,7 @@ Page({
               // console.log(res);
               // console.log('res.data.sessionKey=' + res.data.data.sessionKey);
               // console.log('res.data.unionid=' + res.data.data.unionid);
-              console.log('res.data.openid=' + res.data.data.openid);
+              // console.log('res.data.openid=' + res.data.data.openid);
               getApp().globalData.sessionKey = res.data.data.sessionKey;
               getApp().globalData.unionid = res.data.data.unionid;
               getApp().globalData.openid = res.data.data.openid;

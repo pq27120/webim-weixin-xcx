@@ -16,6 +16,7 @@
         <view class="user">
           <text>{{ item.username }}</text>
         </view>
+        <!-- <image class="avatar" src="../../images/number.png" /> -->
         <image class="avatar" src="../../images/number.png" />
         <view class="msg">
           <view wx:if="{{ item.msg.type == 'img' || item.msg.type == 'audio' || item.msg.type == 'video' || item.msg.type == 'audio'}}">
