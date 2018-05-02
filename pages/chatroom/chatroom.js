@@ -56,10 +56,12 @@ Page({
     // console.log('num='+ num);
     if (num > 0) {
       setTimeout(function () {
+        // console.log('123>>>>' + (wx.getStorageSync(options.your + ',' + getApp().globalData.openid)[num - 1].mid))
         that.setData({
           // toView: wx.getStorageSync(options.your + myName)[num].mid
           // toView: wx.getStorageSync(options.your)[num].mid
-          toView: wx.getStorageSync(options.your + ',' + getApp().globalData.openid)[num].mid
+          // toView: wx.getStorageSync(options.your + ',' + getApp().globalData.openid)[num].mid
+          toView: wx.getStorageSync(options.your + ',' + getApp().globalData.openid)[num - 1].mid
         })
       }, 10)
     }
