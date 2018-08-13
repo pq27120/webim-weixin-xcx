@@ -1,7 +1,7 @@
 var strophe = require('../../utils/strophe.js')
 var WebIM = require('../../utils/WebIM.js')
 var WebIM = WebIM.default
-
+var app = getApp();
 var RecordStatus = {
   SHOW: 0,
   HIDE: 1,
@@ -20,6 +20,7 @@ Page({
   data: {
     chatMsg: [],
     emojiStr: '',
+    wechatId: '',
     yourname: '',
     // myName: '',
     sendInfo: '',
@@ -52,11 +53,11 @@ Page({
     })
     // var num = wx.getStorageSync(options.your).length;
     var num = wx.getStorageSync(options.your + ',' + getApp().globalData.openid).length;
-    // console.log('name + openid = ' + options.your + ',' + getApp().globalData.openid)
-    // console.log('num='+ num);
+     console.log('name + openid = ' + options.your + ',' + getApp().globalData.openid)
+     console.log('num='+ num);
     if (num > 0) {
       setTimeout(function () {
-        // console.log('123>>>>' + (wx.getStorageSync(options.your + ',' + getApp().globalData.openid)[num - 1].mid))
+         console.log('123>>>>' + (wx.getStorageSync(options.your + ',' + getApp().globalData.openid)[num - 1].mid))
         that.setData({
           // toView: wx.getStorageSync(options.your + myName)[num].mid
           // toView: wx.getStorageSync(options.your)[num].mid
@@ -68,6 +69,7 @@ Page({
     // console.log('wx.getStorageSync(options.your)=' + wx.getStorageSync(options.your));
     // console.log('wx.getStorageSync(options.your)=' + wx.getStorageSync(options.your + ',' + getApp().globalData.openid));
     this.setData({
+      wechatId: options.wechatId,
       yourname: options.your,
       // myName: myName,
       inputMessage: '',
@@ -79,7 +81,21 @@ Page({
     wx.setNavigationBarTitle({
       title: that.data.yourname
     })
+
+    app.globalData.jim.onMsgReceive(function (data) {
+       // var that = this;
+      var msg_type = data.messages[0].content.msg_type;
+       if(msg_type == "image") {
+         that.receiveImage(data)
+       }else if(msg_type == "file") {
+         that.receiveAudio(data)
+       }else {
+         that.receiveText(data);
+       }
+     });
+
   },
+
   onShow: function () {
     var that = this
     this.setData({
@@ -155,7 +171,8 @@ Page({
           return
         }
         // console.log(tempFilePath)
-        self.uploadRecord(res.tempFilePath)
+        //self.uploadRecord(res.tempFilePath)
+        self.sendSingleRecord(res.tempFilePath);
       },
       complete: function () {
         console.log("complete")
@@ -303,7 +320,7 @@ Page({
     })
   },
   //***************** 录音 end ***************************
-  sendMessage: function () {
+ sendMessage1: function () {
 
     if (!this.data.userMessage.trim()) return;
 
@@ -358,16 +375,85 @@ Page({
             inputMessage: ''
           })
           setTimeout(function () {
+            console.log(that.data.chatMsg[that.data.chatMsg.length - 1].mid)
             that.setData({
               toView: that.data.chatMsg[that.data.chatMsg.length - 1].mid
             })
           }, 100)
         }
       })
+      
       that.setData({
         userMessage: ''
       })
     }
+  }, 
+  sendMessage: function() {
+
+    //var target_username = that.data.wechatId;
+    if (!this.data.userMessage.trim()) return;
+    var that = this
+    app.globalData.jim.sendSingleMsg({
+      'target_username': that.data.wechatId,
+      'appkey': "5da10dc227e8d4125971ed9b",
+      'content': that.data.sendInfo,
+      'no_offline': false,
+      'no_notification': false,
+      //'custom_notification':{'enabled':true,'title':'title','alert':'alert','at_prefix':'atprefix'}
+      need_receipt: true
+    }).onSuccess(function (data, msg) {
+     // console.log('success data:' + JSON.stringify(data));
+      //console.log('succes msg:' + JSON.stringify(msg));
+
+      var content = msg.content.msg_body.text;
+      console.log(content);
+      var value = WebIM.parseEmoji(msg.content.msg_body.text.replace(/\n/mg, ''));
+      var msgData = {
+        info: {
+          to: that.data.yourname
+        },
+        username: that.data.myName,
+        yourname: that.data.yourname,
+        msg: {
+          type: msg.content.msg_type,
+          data: value
+        },
+        style: 'self',
+        time: msg.content.create_time,
+        mid: "JIM_"+msg.msg_id
+      }
+      that.data.chatMsg.push(msgData)
+      console.log("that.data.yourname.myName= " + that.data.yourname + ',' + getApp().globalData.openid)
+
+      wx.setStorage({
+        // key: that.data.yourname + myName,
+        key: that.data.yourname + ',' + getApp().globalData.openid,
+        data: that.data.chatMsg,
+        success: function () {
+          //console.log('success', that.data)
+          that.setData({
+            chatMsg: that.data.chatMsg,
+            emojiList: [],
+            inputMessage: ''
+          })
+          setTimeout(function () {
+            console.log(that.data.chatMsg[that.data.chatMsg.length - 1].mid)
+            that.setData({
+              toView: that.data.chatMsg[that.data.chatMsg.length - 1].mid
+            })
+          }, 100)
+        }
+      })
+
+      that.setData({
+        userMessage: ''
+      })
+
+
+
+    }).onFail(function (data) {
+      console.log('error:' + JSON.stringify(data));
+    });
   },
 
   receiveMsg: function (msg, type) {
@@ -522,9 +608,10 @@ Page({
       sizeType: ['original', 'compressed'],
       sourceType: ['album'],
       success: function (res) {
-        if (pages[1]) {
-          pages[1].upLoadImage(res, that)
-        }
+        // if (pages[1]) {
+        //   pages[1].upLoadImage(res, that)
+        // }
+        pages[1].sendSingleImage(res);
       }
     })
   },
@@ -535,22 +622,39 @@ Page({
     pages[1].cancelEmoji()
     wx.chooseLocation({
       success: function (respData) {
-        var id = WebIM.conn.getUniqueId();
-        var msg = new WebIM.message('location', id);
-        msg.set({
-          msg: that.data.sendInfo,
-          to: that.data.yourname,
-          roomType: false,
-          lng: respData.longitude,
-          lat: respData.latitude,
-          addr: respData.address,
-          success: function (id, serverMsgId) {
-            //console.log('success')
-          }
+
+        app.globalData.jim.sendSingleLocation({
+          'target_username': that.data.wechatId,
+          'target_nickname': that.data.wechatId,
+          'appkey': "5da10dc227e8d4125971ed9b",
+          'latitude': respData.latitude,
+          'longitude': respData.longitude,
+          'scale': 1,
+          'label': respData.longitude,
+          'nead_receipt': true
+        }).onSuccess(function (data) {
+          console.log('success:' + JSON.stringify(data));
+          
+        }).onFail(function (data) {
+          console.log('error:' + JSON.stringify(data));
+          
         });
-        // //console.log(msg)
-        msg.body.chatType = 'singleChat';
-        WebIM.conn.send(msg.body);
+        // var id = WebIM.conn.getUniqueId();
+        // var msg = new WebIM.message('location', id);
+        // msg.set({
+        //   msg: that.data.sendInfo,
+        //   to: respData.longitude,
+        //   roomType: false,
+        //   lng: respData.longitude,
+        //   lat: respData.latitude,
+        //   addr: respData.longitude,
+        //   success: function (id, serverMsgId) {
+        //     //console.log('success')
+        //   }
+        // });
+        // // //console.log(msg)
+        // msg.body.chatType = 'singleChat';
+        // WebIM.conn.send(msg.body);
       }
     })
   },
@@ -673,31 +777,39 @@ Page({
   //         }
   //     })
   // },
-  receiveImage: function (msg, type) {
-    var that = this
-    var myName = wx.getStorageSync('myUsername')
-    //console.log(msg)
-    if (msg) {
-      //console.log(msg)
-      var time = WebIM.time()
+  receiveImage: function (data) {
+    var that = this;
+    var content = data.messages[0].content;
+    var msg_type = data.messages[0].content.msg_type;
+
+    app.globalData.jim.getResource({
+      'media_id': content.msg_body.media_id,
+    }).onSuccess(function (data) {
+      //data.code 返回码
+      //data.message 描述
+      //data.url 资源临时访问路径
+
+      var time = content.create_time
       var msgData = {
         info: {
-          from: msg.from,
-          to: msg.to
+          from: content.from_name,
+          to: content.target_name
         },
-        username: msg.from,
-        yourname: msg.from,
+        username: '',
+        yourname: content.from_name,
         msg: {
-          type: 'img',
-          data: msg.url
+          type: msg_type,
+          data: data.url
         },
         style: '',
         time: time,
-        mid: 'img' + msg.id
+        mid: "JIM" + data.rid
       }
-      //console.log(msgData)
+
+      msgData.style = ''
+      msgData.username = content.from_name
       that.data.chatMsg.push(msgData)
-      //console.log(that.data.chatMsg)
+
       wx.setStorage({
         // key: that.data.yourname + myName,
         key: that.data.yourname + ',' + getApp().globalData.openid,
@@ -711,10 +823,206 @@ Page({
             that.setData({
               toView: that.data.chatMsg[that.data.chatMsg.length - 1].mid
             })
-          }, 100)
+          }, 10)
         }
       })
+
+
+    }).onFail(function (data) {
+      //data.code 返回码
+      //data.message 描述
+    });
+
+    // var that = this
+    // var myName = wx.getStorageSync('myUsername')
+    // //console.log(msg)
+    // if (msg) {
+    //   //console.log(msg)
+    //   var time = WebIM.time()
+    //   var msgData = {
+    //     info: {
+    //       from: msg.from,
+    //       to: msg.to
+    //     },
+    //     username: msg.from,
+    //     yourname: msg.from,
+    //     msg: {
+    //       type: 'img',
+    //       data: msg.url
+    //     },
+    //     style: '',
+    //     time: time,
+    //     mid: 'img' + msg.id
+    //   }
+    //   //console.log(msgData)
+    //   that.data.chatMsg.push(msgData)
+    //   //console.log(that.data.chatMsg)
+    //   wx.setStorage({
+    //     // key: that.data.yourname + myName,
+    //     key: that.data.yourname + ',' + getApp().globalData.openid,
+    //     data: that.data.chatMsg,
+    //     success: function () {
+    //       //console.log('success', that.data)
+    //       that.setData({
+    //         chatMsg: that.data.chatMsg
+    //       })
+    //       setTimeout(function () {
+    //         that.setData({
+    //           toView: that.data.chatMsg[that.data.chatMsg.length - 1].mid
+    //         })
+    //       }, 100)
+    //     }
+    //   })
+    // }
+  },
+
+  receiveText:function(data) {
+    var that = this;
+    var content = data.messages[0].content;
+    var msg_type = content.msg_type;
+
+    var myName = wx.getStorageSync('myUsername');
+    var time = content.create_time;
+    var value = WebIM.parseEmoji(content.msg_body.text.replace(/\n/mg, ''));
+
+    var msgData = {
+      info: {
+        from: content.from_name,
+        to: content.target_name
+      },
+      username: '',
+      yourname: content.from_name,
+      msg: {
+        type: msg_type,
+        data: value
+      },
+      style: '',
+      time: time,
+      mid: msg_type + data.rid
     }
+
+
+    msgData.style = ''
+    msgData.username = content.from_name
+
+    that.data.chatMsg.push(msgData)
+    wx.setStorage({
+      // key: that.data.yourname + myName,
+      key: that.data.yourname + ',' + getApp().globalData.openid,
+      data: that.data.chatMsg,
+      success: function () {
+        if (msg_type == 'audio')
+          return;
+        //console.log('success', that.data)
+        that.setData({
+          chatMsg: that.data.chatMsg,
+        })
+        setTimeout(function () {
+          that.setData({
+            toView: that.data.chatMsg[that.data.chatMsg.length - 1].mid
+          })
+        }, 100)
+      }
+    })
+  },
+
+  receiveAudio: function (data) {
+
+    var that = this;
+    var content = data.messages[0].content;
+    var msg_type = data.messages[0].content.msg_type;
+
+    app.globalData.jim.getResource({
+      'media_id': content.msg_body.media_id,
+    }).onSuccess(function (data) {
+      //data.code 返回码
+      //data.message 描述
+      //data.url 资源临时访问路径
+
+      var time = content.create_time
+      var msgData = {
+        info: {
+          from: content.from_name,
+          to: content.target_name
+        },
+        username: '',
+        yourname: content.from_name,
+        msg: {
+          type: "audio",
+          data: data.url
+        },
+        style: '',
+        time: time,
+        mid: "JIM" + data.rid
+      }
+
+      msgData.style = ''
+      msgData.username = content.from_name
+      that.data.chatMsg.push(msgData)
+
+      wx.setStorage({
+        // key: that.data.yourname + myName,
+        key: that.data.yourname + ',' + getApp().globalData.openid,
+        data: that.data.chatMsg,
+        success: function () {
+          //console.log('success', that.data)
+          that.setData({
+            chatMsg: that.data.chatMsg
+          })
+          setTimeout(function () {
+            that.setData({
+              toView: that.data.chatMsg[that.data.chatMsg.length - 1].mid
+            })
+          }, 10)
+        }
+      })
+
+
+    }).onFail(function (data) {
+      //data.code 返回码
+      //data.message 描述
+    });
+    // var that = this
+    // var myName = wx.getStorageSync('myUsername')
+    // //console.log(msg)
+    // if (msg) {
+    //   //console.log(msg)
+    //   var time = WebIM.time()
+    //   var msgData = {
+    //     info: {
+    //       from: msg.from,
+    //       to: msg.to
+    //     },
+    //     username: msg.from,
+    //     yourname: msg.from,
+    //     msg: {
+    //       type: 'video',
+    //       data: msg.url
+    //     },
+    //     style: '',
+    //     time: time,
+    //     mid: 'video' + msg.id
+    //   }
+    //   //console.log(msgData)
+    //   that.data.chatMsg.push(msgData)
+    //   //console.log(that.data.chatMsg)
+    //   wx.setStorage({
+    //     // key: that.data.yourname + myName,
+    //     key: that.data.yourname + ',' + getApp().globalData.openid,
+    //     data: that.data.chatMsg,
+    //     success: function () {
+    //       //console.log('success', that.data)
+    //       that.setData({
+    //         chatMsg: that.data.chatMsg
+    //       })
+    //       setTimeout(function () {
+    //         that.setData({
+    //           toView: that.data.chatMsg[that.data.chatMsg.length - 1].mid
+    //         })
+    //       }, 100)
+    //     }
+    //   })
+    // }
   },
 
   receiveVideo: function (msg, type) {
@@ -771,7 +1079,8 @@ Page({
       sourceType: ['camera'],
       success: function (res) {
         if (pages[1]) {
-          pages[1].upLoadImage(res, that)
+          //pages[1].upLoadImage(res, that)
+          pages[1].sendSingleImage(res);
         }
       }
     })
@@ -901,6 +1210,139 @@ Page({
     wx.previewImage({
       urls: [url]  // 需要预览的图片http链接列表
     })
+  },
+  sendSingleImage:function(res) {
+    var that = this
+    var tempFilePaths = res.tempFilePaths[0]; //获取成功，读取文件路
+    app.globalData.jim.sendSinglePic({
+      'target_username': that.data.wechatId,
+      'target_nickname': that.data.wechatId,
+      'appkey': "5da10dc227e8d4125971ed9b",
+      'image': tempFilePaths //设置图片参数
+    }).onSuccess(function (data, msg) {
+      console.log(msg)
+      app.globalData.jim.getResource({
+        'media_id': msg.content.msg_body.media_id,
+      }).onSuccess(function (data) {
+        //data.code 返回码
+        //data.message 描述
+        //data.url 资源临时访问路径
+
+        var time = msg.content.create_time
+        var msgData = {
+          info: {
+            to: msg.target_name
+          },
+          username: that.data.myName,
+          yourname: msg.target_name,
+          msg: {
+            type: msg.content.msg_type,
+            data: data.url,
+            size: {
+              width: msg.content.msg_body.width,
+              height: msg.content.msg_body.height,
+            }
+          },
+          style: 'self',
+          time: time,
+          mid: "JIM_" + msg.msg_id
+        }
+        that.data.chatMsg.push(msgData)
+        //console.log(that.data.chatMsg)
+        var myName = wx.getStorageSync('myUsername')
+        wx.setStorage({
+          // key: that.data.yourname + myName,
+          key: that.data.yourname + ',' + getApp().globalData.openid,
+          data: that.data.chatMsg,
+          success: function () {
+            //console.log('success', that.data)
+            that.setData({
+              chatMsg: that.data.chatMsg
+            })
+            setTimeout(function () {
+              that.setData({
+                toView: that.data.chatMsg[that.data.chatMsg.length - 1].mid
+              })
+            }, 10)
+          }
+        })
+
+
+      }).onFail(function (data) {
+        //data.code 返回码
+        //data.message 描述
+      });
+
+    }).onFail(function (data) {
+      //TODO
+    });
+  },
+  sendSingleRecord: function (tempFilePath) {
+    var that = this
+    app.globalData.jim.sendSingleVedio({
+      'target_username': that.data.wechatId,
+      'target_nickname': that.data.wechatId,
+      'appkey': "5da10dc227e8d4125971ed9b",
+      'file': tempFilePath
+    }).onSuccess(function (data, msg) {
+      console.log('success:' + JSON.stringify(msg));
+
+      app.globalData.jim.getResource({
+        'media_id': msg.content.msg_body.media_id,
+      }).onSuccess(function (data) {
+        //data.code 返回码
+        //data.message 描述
+        //data.url 资源临时访问路径
+
+        var time = msg.content.create_time
+        var msgData = {
+          info: {
+            to: msg.target_name
+          },
+          username: that.data.myName,
+          yourname: msg.target_name,
+          msg: {
+            type: 'audio',
+            data: data.url,
+            url: data.url,
+          },
+          style: 'self',
+          time: time,
+          mid: "JIM_" + msg.msg_id
+        }
+        that.data.chatMsg.push(msgData)
+        console.log(that.data.chatMsg)
+        // 存储到本地消息
+        var myName = wx.getStorageSync('myUsername')
+        wx.setStorage({
+          // key: that.data.yourname + myName,
+          key: that.data.yourname + ',' + getApp().globalData.openid,
+          data: that.data.chatMsg,
+          success: function () {
+            //console.log('success', that.data)
+            that.setData({
+              chatMsg: that.data.chatMsg
+            })
+            setTimeout(function () {
+
+              that.setData({
+                toView: that.data.chatMsg[that.data.chatMsg.length - 1].mid
+              })
+            }, 10)
+          }
+        })
+
+
+
+      }).onFail(function (data) {
+        //data.code 返回码
+        //data.message 描述
+      });
+      
+    }).onFail(function (data) {
+      //TODO
+    });
+  
   }
 })
 

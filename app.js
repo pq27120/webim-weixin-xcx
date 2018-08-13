@@ -26,7 +26,7 @@ App({
     wx.setStorageSync('logs', logs)
 
     var jim = new JMessage({
-      debug: true
+      debug:true
     });
 
     var appkey = "5da10dc227e8d4125971ed9b";
@@ -46,6 +46,13 @@ App({
     }).onSuccess(function (data) {
       //TODO
       that.globalData.jim = jim;
+
+      jim.onSyncConversation(function (data) { //离线消息同步监听
+        data = JSON.stringify(data);
+        console.log('>>>>>>>>>>event_receive:' + data);
+        //appendToDashboard('event_receive: ' + JSON.stringify(data));
+      });
+
     }).onFail(function (data) {
       //TODO
     });

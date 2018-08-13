@@ -19,27 +19,27 @@
         <!-- <image class="avatar" src="../../images/number.png" /> -->
         <image class="avatar" src="../../images/number.png" />
         <view class="msg">
-          <view wx:if="{{ item.msg.type == 'img' || item.msg.type == 'audio' || item.msg.type == 'video' || item.msg.type == 'audio'}}">
+          <view wx:if="{{ item.msg.type == 'image' || item.msg.type == 'audio' || item.msg.type == 'video' || item.msg.type == 'audio'}}">
             <template is="{{ item.msg.type }}" data="{{ item, msgView }}" />
           </view>
-          <view wx:elif="{{ item.msg.type == 'txt' || item.msg.type == 'emoji' }}">
-            <view class="template" wx:for="{{ item.msg.data }}" wx:key="">
+          <view wx:elif="{{ item.msg.type == 'text' || item.msg.type == 'emoji' }}">
+             <view class="template" wx:for="{{ item.msg.data }}" wx:key="">
               <template is="{{ item.type }}" data="{{ item }}" />
-            </view>
+            </view>  
           </view>
         </view>
       </view>
     </view>
   </scroll-view>
 
-  <template name="txt">
+  <template name="text">
     <text style="float: left;margin-top: 2px;">{{ item.data }}</text>
   </template>
 
   <template name="emoji">
     <image class="avatar" src="{{'../../images/faces/' + item.data }}" style="width: 25px;height: 25px;margin: 0 0 2px 0;float: left;" />
   </template>
-  <template name="img">
+  <template name="image">
     <image class="avatar" src="{{ item.msg.data }}" style="width:90px;height: 120px;margin: 2px auto;" mode="aspectFit" bindtap="previewImage" data-url="{{ item.msg.data }}" />
   </template>
   <template name="video">

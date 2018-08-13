@@ -92,7 +92,7 @@ WebIM.parseEmoji = function (msg) {
             } else {
                 var obj = {}
                 obj['data'] = msgList[i]
-                obj['type'] = 'txt'
+                obj['type'] = 'text'
                 objList.push(obj)
             }
         }

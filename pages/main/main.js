@@ -1,7 +1,7 @@
 var strophe = require('../../utils/strophe.js')
 var WebIM = require('../../utils/WebIM.js')
 var WebIM = WebIM.default
-
+var app = getApp();
 Page({
   data: {
     search_btn: true,
@@ -20,10 +20,15 @@ Page({
       // myrole: option.role
       isDoctor: (getApp().globalData.role == 1)
     })
-    //console.log("wjy")
-    //var that = this
-    //console.log('main js .... role = ' + that.data.myrole)
+
+    app.globalData.jim.onSyncConversation(function (data) { //离线消息同步监听
+      data = JSON.stringify(data);
+      console.log('>>>>>>>>>><<<<<<<<<onSyncConversation:' + data);
+    });
+
   },
+
+
   onShow: function () {
     // var that = this
     // //console.log(WebIM.conn)
@@ -104,7 +109,7 @@ Page({
             }
           }
 
-          // console.log('res= ' + res[0].patientUrl);
+           console.log('res= ' + res[0].patientUrl);
 
           that.setData({
             // member: member
@@ -280,7 +285,8 @@ Page({
     //console.log(event)
     var nameList = {
       // myName: that.data.myName,
-      your: event.target.dataset.username
+      your: event.target.dataset.username,
+      wechatId:"oeuiY5fFjRis5LO5ERWhNFqNxIvo1"
     }
     wx.navigateTo({
       url: '../chatroom/chatroom?username=' + JSON.stringify(nameList)
